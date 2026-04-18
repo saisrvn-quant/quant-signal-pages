@@ -615,20 +615,29 @@ footer {
     <div style="color:var(--text3);font-size:12px;padding:2rem">Loading signals...</div>
   </div>
 
-  <div class="section-label">System accuracy — rolling performance</div>
+  <div class="section-label">System accuracy — backtest vs live</div>
   <div class="perf-section">
     <table class="perf-table">
       <thead>
         <tr>
-          <th>Asset</th><th>Regime</th><th>Accuracy</th>
-          <th>Rolling 20</th><th>Rolling 50</th>
-          <th>Sharpe</th><th>Sortino</th><th>Total</th>
+          <th>Asset</th>
+          <th colspan="3" style="text-align:center;border-right:1px solid var(--border)">Backtest (6mo walk-forward)</th>
+          <th colspan="3" style="text-align:center">Live (real deployment)</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Accuracy</th><th>Roll-20</th><th style="border-right:1px solid var(--border)">Signals</th>
+          <th>Accuracy</th><th>Roll-20</th><th>Signals</th>
         </tr>
       </thead>
       <tbody id="perf-body">
-        <tr><td colspan="8" style="color:var(--text3);padding:1rem">Loading...</td></tr>
+        <tr><td colspan="7" style="color:var(--text3);padding:1rem">Loading...</td></tr>
       </tbody>
     </table>
+    <div style="font-size:11px;color:var(--text3);margin-top:8px">
+      Backtest: walk-forward on 6mo historical data, evaluated 2 bars forward. Live: real signals since deployment.
+      Accuracy >55% = edge. 50% = random. &lt;45% = fade the signal.
+    </div>
   </div>
 </main>
 
@@ -758,26 +767,23 @@ function renderCard(s){
 
 function renderPerf(perf){
   const body = document.getElementById('perf-body');
+  const fmtAcc = (v) => v==null ? '<span style="color:var(--text3)">—</span>'
+    : `<span style="color:${v>=0.55?'var(--bull)':v>=0.50?'var(--gold)':'var(--bear)'}">${(v*100).toFixed(1)}%</span>`;
+  const fmtN = (v) => `<span style="color:var(--text3);font-size:11px">${v||0}</span>`;
   const rows = Object.entries(perf)
     .filter(([k])=>k!=='_updated')
     .map(([asset,p])=>{
-      const acc = p.accuracy;
-      const col = acc==null?'var(--text3)':acc>=0.6?'var(--bull)':acc>=0.5?'var(--gold)':'var(--bear)';
-      const w = acc==null?0:Math.round(acc*100);
       return `<tr>
         <td><div class="asset-cell"><div class="an">${asset}</div></div></td>
-        <td>—</td>
-        <td><div class="acc-bar">
-          <div class="acc-bar-bg"><div class="acc-bar-fill" style="width:${w}%;background:${col}"></div></div>
-          <span style="color:${col}">${acc==null?'N/A':(acc*100).toFixed(1)+'%'}</span>
-        </div></td>
-        <td style="color:${col}">${p.rolling_20==null?'N/A':(p.rolling_20*100).toFixed(1)+'%'}</td>
-        <td style="color:${col}">${p.rolling_50==null?'N/A':(p.rolling_50*100).toFixed(1)+'%'}</td>
-        <td>—</td><td>—</td>
-        <td style="color:var(--text3)">${p.total_evaluated||0}</td>
+        <td>${fmtAcc(p.bt_accuracy)}</td>
+        <td>${fmtAcc(p.bt_rolling_20)}</td>
+        <td style="border-right:1px solid var(--border)">${fmtN(p.bt_total)}</td>
+        <td>${p.live_total>0 ? fmtAcc(p.live_accuracy) : '<span style="color:var(--text3);font-size:11px">building…</span>'}</td>
+        <td>${p.live_total>=5 ? fmtAcc(p.live_rolling_20) : '<span style="color:var(--text3);font-size:11px">need 5+</span>'}</td>
+        <td>${fmtN(p.live_total)}</td>
       </tr>`;
     }).join('');
-  body.innerHTML = rows||'<tr><td colspan="8" style="color:var(--text3)">No data yet</td></tr>';
+  body.innerHTML = rows||'<tr><td colspan="7" style="color:var(--text3)">No data yet</td></tr>';
 }
 
 async function loadData(){
