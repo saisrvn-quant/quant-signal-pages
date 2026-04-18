@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>QUANT SIGNAL — Market Intelligence Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #070a0e;
+  --bg2:      #0c1118;
+  --bg3:      #111820;
+  --border:   #1a2535;
+  --border2:  #243045;
+  --text:     #8fa8c4;
+  --text2:    #c8daf0;
+  --text3:    #4a6280;
+  --bull:     #00e676;
+  --bull2:    #00c853;
+  --bull-dim: #003d1a;
+  --bear:     #ff3d57;
+  --bear2:    #d50000;
+  --bear-dim: #3d000a;
+  --gold:     #ffd740;
+  --gold-dim: #3d3000;
+  --cyan:     #00e5ff;
+  --cyan-dim: #003d44;
+  --mono:     'IBM Plex Mono', monospace;
+  --sans:     'IBM Plex Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── SCANLINE EFFECT ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.08) 2px, rgba(0,0,0,.08) 4px);
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ── HEADER ── */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.logo-mark {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .25em;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+
+.logo-sub {
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: .12em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--bull);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+  margin-right: 6px;
+}
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.ts { color: var(--text2); font-size: 11px; }
+
+/* ── LAYOUT ── */
+main { max-width: 1440px; margin: 0 auto; padding: 20px 28px 60px; }
+
+/* ── MARKET STATUS BAR ── */
+.status-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.status-cell {
+  background: var(--bg2);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-asset {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: var(--text3);
+}
+
+.status-price {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text2);
+}
+
+.status-change {
+  font-size: 11px;
+}
+
+.up { color: var(--bull); }
+.down { color: var(--bear); }
+.neutral { color: var(--gold); }
+
+/* ── SECTION HEADING ── */
+.section-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── SIGNAL CARDS ── */
+.signal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.signal-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color .2s;
+  animation: fadeUp .4s ease both;
+}
+
+.signal-card:hover { border-color: var(--border2); }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.signal-card:nth-child(1){ animation-delay:.05s }
+.signal-card:nth-child(2){ animation-delay:.10s }
+.signal-card:nth-child(3){ animation-delay:.15s }
+.signal-card:nth-child(4){ animation-delay:.20s }
+.signal-card:nth-child(5){ animation-delay:.25s }
+
+.card-top {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+
+.conviction-bar {
+  width: 4px;
+  flex-shrink: 0;
+}
+
+.card-header {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 16px;
+}
+
+.asset-id {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.asset-name {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--text2);
+}
+
+.asset-full {
+  font-size: 9px;
+  letter-spacing: .1em;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+
+.signal-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.signal-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.signal-label.STRONG-BUY  { background: var(--bull-dim); color: var(--bull); border: 1px solid var(--bull2); }
+.signal-label.BUY         { background: #001a0d; color: #4caf50; border: 1px solid #2e7d32; }
+.signal-label.STRONG-SELL { background: var(--bear-dim); color: var(--bear); border: 1px solid var(--bear2); }
+.signal-label.SELL        { background: #1a0005; color: #ef5350; border: 1px solid #b71c1c; }
+.signal-label.NEUTRAL     { background: var(--gold-dim); color: var(--gold); border: 1px solid #f9a825; }
+.signal-label.NO-TRADE    { background: var(--bg3); color: var(--text3); border: 1px solid var(--border); }
+
+.conviction-pct {
+  font-size: 10px;
+  color: var(--text3);
+}
+
+/* ── CARD BODY ── */
+.card-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.price-now {
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--text2);
+  letter-spacing: -.01em;
+}
+
+.price-change { font-size: 12px; }
+
+/* ── METRICS GRID ── */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.metric {
+  background: var(--bg3);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.metric-label {
+  font-size: 9px;
+  letter-spacing: .1em;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+
+.metric-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+}
+
+.metric-value.good { color: var(--bull); }
+.metric-value.warn { color: var(--gold); }
+.metric-value.bad  { color: var(--bear); }
+
+/* ── RISK METRICS ── */
+.risk-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.risk-cell {
+  background: var(--bg3);
+  padding: 7px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.risk-label { font-size: 9px; color: var(--text3); letter-spacing: .08em; }
+.risk-value { font-size: 12px; font-weight: 500; color: var(--text2); }
+
+/* ── GATE STATUS ── */
+.gates {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.gate {
+  font-size: 9px;
+  letter-spacing: .06em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gate.pass { background: var(--bull-dim); color: var(--bull); }
+.gate.fail { background: var(--bear-dim); color: var(--bear); }
+
+.gate-dot { width: 5px; height: 5px; border-radius: 50%; }
+.gate.pass .gate-dot { background: var(--bull); }
+.gate.fail .gate-dot { background: var(--bear); }
+
+/* ── POSITION PLAN ── */
+.position-plan {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.plan-header {
+  background: var(--bg3);
+  padding: 7px 12px;
+  font-size: 9px;
+  letter-spacing: .15em;
+  color: var(--text3);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plan-header span { color: var(--text2); font-size: 11px; letter-spacing: 0; }
+
+.plan-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.plan-section {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.plan-section:first-child { border-right: 1px solid var(--border); }
+
+.plan-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+
+.plan-key { color: var(--text3); }
+.plan-val { color: var(--text2); font-weight: 500; }
+.plan-val.entry  { color: var(--cyan); }
+.plan-val.stop   { color: var(--bear); }
+.plan-val.target { color: var(--bull); }
+
+/* ── KELLY / ALLOCATION BLOCK ── */
+.allocation-block {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alloc-left { display: flex; flex-direction: column; gap: 3px; }
+.alloc-label { font-size: 9px; letter-spacing: .1em; color: var(--text3); text-transform: uppercase; }
+.alloc-pct { font-size: 28px; font-weight: 600; letter-spacing: -.02em; }
+.alloc-pct.bull-color { color: var(--bull); }
+.alloc-pct.bear-color { color: var(--bear); }
+.alloc-pct.neutral-color { color: var(--text3); }
+
+.alloc-right { text-align: right; font-size: 11px; color: var(--text3); line-height: 1.8; }
+.alloc-right b { color: var(--text2); }
+
+/* ── INDICATOR STRIP ── */
+.indicator-strip {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ind-chip {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: .04em;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ind-chip .ind-val { color: var(--text2); font-weight: 500; }
+.ind-chip.bull-chip { border-color: #1b5e20; color: #81c784; }
+.ind-chip.bull-chip .ind-val { color: var(--bull); }
+.ind-chip.bear-chip { border-color: #7f0014; color: #ef9a9a; }
+.ind-chip.bear-chip .ind-val { color: var(--bear); }
+
+/* ── REASONING ── */
+.reasoning {
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.7;
+  border-left: 2px solid var(--border2);
+  padding-left: 10px;
+  font-family: var(--sans);
+}
+
+.reasoning strong { color: var(--text2); font-family: var(--mono); font-size: 10px; font-weight: 500; }
+
+/* ── EXIT TRIGGERS ── */
+.exits {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.exit-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 2px;
+  background: var(--bg3);
+  border-left: 2px solid transparent;
+}
+
+.exit-row.hard { border-left-color: var(--bear); }
+.exit-row.medium { border-left-color: var(--gold); }
+.exit-row.soft { border-left-color: var(--text3); }
+
+.exit-trigger { color: var(--text3); }
+.exit-action { color: var(--text2); font-weight: 500; }
+
+/* ── PERFORMANCE TABLE ── */
+.perf-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.perf-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.perf-table th {
+  padding: 10px 14px;
+  font-size: 9px;
+  letter-spacing: .15em;
+  color: var(--text3);
+  text-transform: uppercase;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+  font-weight: 500;
+}
+
+.perf-table td {
+  padding: 10px 14px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.perf-table tr:last-child td { border-bottom: none; }
+.perf-table tr:hover td { background: var(--bg3); }
+
+.asset-cell { display: flex; flex-direction: column; gap: 2px; }
+.asset-cell .an { font-weight: 600; letter-spacing: .06em; color: var(--text2); }
+.asset-cell .af { font-size: 9px; color: var(--text3); }
+
+.acc-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.acc-bar-bg {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  max-width: 80px;
+}
+
+.acc-bar-fill { height: 100%; border-radius: 2px; }
+
+.regime-tag {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 2px;
+  letter-spacing: .06em;
+  font-weight: 500;
+}
+
+.regime-trending  { background: var(--cyan-dim); color: var(--cyan); }
+.regime-choppy    { background: var(--gold-dim); color: var(--gold); }
+.regime-breakout  { background: #1a0030; color: #ce93d8; }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: .08em;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+
+/* ── SCROLL BAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── REFRESH COUNTDOWN ── */
+.countdown-ring {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--text3);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">QUANT::SIGNAL</div>
+    <div class="logo-sub">Market Intelligence Terminal v2.0</div>
+  </div>
+  <div class="header-right">
+    <div><span class="live-dot"></span><span class="ts">LIVE</span></div>
+    <div class="ts" id="clock">—</div>
+    <div class="countdown-ring">NEXT RUN <span id="countdown" style="color:var(--cyan);margin-left:4px">—</span></div>
+  </div>
+</header>
+
+<main>
+  <div class="status-bar" id="status-bar">
+    <div class="status-cell" style="color:var(--text3);font-size:11px">Loading...</div>
+  </div>
+
+  <div class="section-label">Active signals — 2h analysis</div>
+  <div class="signal-grid" id="signal-grid">
+    <div style="color:var(--text3);font-size:12px;padding:2rem">Loading signals...</div>
+  </div>
+
+  <div class="section-label">System accuracy — rolling performance</div>
+  <div class="perf-section">
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>Asset</th><th>Regime</th><th>Accuracy</th>
+          <th>Rolling 20</th><th>Rolling 50</th>
+          <th>Sharpe</th><th>Sortino</th><th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="perf-body">
+        <tr><td colspan="8" style="color:var(--text3);padding:1rem">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer>
+  QUANT::SIGNAL — Research tool only. Not financial advice. Data: yfinance (15-30 min delay). Verify independently before acting.
+</footer>
+
+<script>
+function clock(){
+  const n=new Date();
+  document.getElementById('clock').textContent=n.toUTCString().slice(0,25)+' UTC';
+}
+clock(); setInterval(clock,1000);
+
+let secs=7200;
+function countdown(){
+  secs--;
+  if(secs<0){loadData();secs=7200;}
+  const m=String(Math.floor(secs/60)).padStart(2,'0');
+  const s=String(secs%60).padStart(2,'0');
+  document.getElementById('countdown').textContent=m+':'+s;
+}
+setInterval(countdown,1000);
+
+const sigClass = s => s==='STRONG BUY'||s==='BUY'?'bull':s==='STRONG SELL'||s==='SELL'?'bear':'neut';
+const badgeClass = s => s.replace(/ /g,'-');
+const pct = v => v==null?'N/A':(v*100).toFixed(1)+'%';
+const barColor = v => v>=0.6?'var(--bull)':v>=0.45?'var(--gold)':'var(--bear)';
+const fmt = (v,d=2) => v==null?'—':Number(v).toLocaleString(undefined,{maximumFractionDigits:d});
+
+function renderStatus(signals){
+  document.getElementById('status-bar').innerHTML = signals.map(s=>`
+    <div class="status-cell">
+      <div class="status-asset">${s.asset}</div>
+      <div class="status-price">${fmt(s.price,2)}</div>
+      <div class="status-change ${sigClass(s.signal)}">${s.signal}</div>
+    </div>`).join('');
+}
+
+function renderCard(s){
+  const sc = sigClass(s.signal);
+  const barColor2 = sc==='bull'?'var(--bull)':sc==='bear'?'var(--bear)':'var(--text3)';
+  const rm = s.risk_metrics||{};
+  const pos = s.position||{};
+  const bd = s.breakdown||{};
+  const dq = s.data_quality||{};
+  const gates = (s.gates||[]).map(g=>`
+    <div class="gate ${g.passed?'pass':'fail'}">
+      <div class="gate-dot"></div>${g.gate}
+    </div>`).join('');
+
+  const warning = s.data_warning?`
+    <div style="background:var(--gold-dim);border:1px solid #f9a825;border-radius:4px;
+         padding:8px 12px;margin-bottom:10px;font-size:11px;color:var(--gold)">
+      ⚠ ${s.data_warning}
+    </div>`:'';
+
+  const dailyRow = s.daily_signal?`
+    <div style="font-size:11px;color:var(--gold);margin-top:4px">
+      📅 Daily trend (reliable): <b>${s.daily_signal.toUpperCase()}</b>
+    </div>`:'';
+
+  const planBody = pos.entry?`
+    <div class="position-plan">
+      <div class="plan-header">Position plan <span>${(s.direction||'').toUpperCase()}</span></div>
+      <div class="plan-body">
+        <div class="plan-section">
+          <div class="plan-row"><span class="plan-key">Entry</span><span class="plan-val entry">${fmt(pos.entry)}</span></div>
+          <div class="plan-row"><span class="plan-key">Stop loss</span><span class="plan-val stop">${fmt(pos.stop_loss)}</span></div>
+        </div>
+        <div class="plan-section">
+          <div class="plan-row"><span class="plan-key">TP1 (25%)</span><span class="plan-val target">${fmt(pos.tp1)}</span></div>
+          <div class="plan-row"><span class="plan-key">TP2 (25%)</span><span class="plan-val target">${fmt(pos.tp2)}</span></div>
+          <div class="plan-row"><span class="plan-key">R:R</span><span class="plan-val">1 : ${pos.rr_at_tp1||'—'}</span></div>
+        </div>
+      </div>
+    </div>`:'';
+
+  const noTradeReason = s.signal==='NO TRADE'?`
+    <div class="reasoning">
+      <strong>NO TRADE —</strong> ${s.reason||s.failure_reason||'Gates not passed'}
+    </div>`:'';
+
+  const cachedWarn = dq.using_cached?`
+    <div style="font-size:10px;color:var(--bear);margin-top:4px">⚠ Using cached data — live fetch failed</div>`:'';
+
+  return `
+    <div class="signal-card">
+      <div class="card-top">
+        <div class="conviction-bar" style="background:${barColor2}"></div>
+        <div class="card-header">
+          <div class="asset-id">
+            <div class="asset-name">${s.asset}</div>
+            <div class="asset-full">${s.regime?.regime?.toUpperCase()||'—'} · ${s.daily_trend||'—'}</div>
+          </div>
+          <div class="signal-badge">
+            <div class="signal-label ${badgeClass(s.signal)}">${s.signal}</div>
+            <div class="conviction-pct">Kelly: ${fmt(s.allocation_pct,1)||'0'}%</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        ${warning}
+        <div class="price-row">
+          <div class="price-now">${fmt(s.price,2)}</div>
+          <div class="price-change ${sigClass(s.signal)}">ATR ${fmt(s.breakdown?.atr,2)}</div>
+        </div>
+        <div class="risk-row">
+          <div class="risk-cell"><div class="risk-label">Sharpe</div><div class="risk-value" style="color:${(rm.sharpe||0)>0.5?'var(--bull)':'var(--gold)'}">${fmt(rm.sharpe,2)}</div></div>
+          <div class="risk-cell"><div class="risk-label">Sortino</div><div class="risk-value" style="color:${(rm.sortino||0)>0.5?'var(--bull)':'var(--gold)'}">${fmt(rm.sortino,2)}</div></div>
+          <div class="risk-cell"><div class="risk-label">Z-Score</div><div class="risk-value">${fmt(rm.zscore,2)}</div></div>
+          <div class="risk-cell"><div class="risk-label">ATR%</div><div class="risk-value">${pct(rm.atr_pct)}</div></div>
+          <div class="risk-cell"><div class="risk-label">Win Rate</div><div class="risk-value">${pct(rm.win_rate)}</div></div>
+          <div class="risk-cell"><div class="risk-label">ML Prob</div><div class="risk-value">${pct(s.ml_probability)}</div></div>
+        </div>
+        <div class="gates">${gates}</div>
+        ${dailyRow}
+        ${cachedWarn}
+        ${planBody}
+        ${noTradeReason}
+        <div style="font-size:10px;color:var(--text3);margin-top:8px">
+          ${dq.last_candle_utc?'Price as of: '+dq.last_candle_utc:''} · ${s.timestamp?s.timestamp.slice(0,16)+' UTC run':''}
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderPerf(perf){
+  const body = document.getElementById('perf-body');
+  const rows = Object.entries(perf)
+    .filter(([k])=>k!=='_updated')
+    .map(([asset,p])=>{
+      const acc = p.accuracy;
+      const col = acc==null?'var(--text3)':acc>=0.6?'var(--bull)':acc>=0.5?'var(--gold)':'var(--bear)';
+      const w = acc==null?0:Math.round(acc*100);
+      return `<tr>
+        <td><div class="asset-cell"><div class="an">${asset}</div></div></td>
+        <td>—</td>
+        <td><div class="acc-bar">
+          <div class="acc-bar-bg"><div class="acc-bar-fill" style="width:${w}%;background:${col}"></div></div>
+          <span style="color:${col}">${acc==null?'N/A':(acc*100).toFixed(1)+'%'}</span>
+        </div></td>
+        <td style="color:${col}">${p.rolling_20==null?'N/A':(p.rolling_20*100).toFixed(1)+'%'}</td>
+        <td style="color:${col}">${p.rolling_50==null?'N/A':(p.rolling_50*100).toFixed(1)+'%'}</td>
+        <td>—</td><td>—</td>
+        <td style="color:var(--text3)">${p.total_evaluated||0}</td>
+      </tr>`;
+    }).join('');
+  body.innerHTML = rows||'<tr><td colspan="8" style="color:var(--text3)">No data yet</td></tr>';
+}
+
+async function loadData(){
+  try{
+    const [sr,pr] = await Promise.all([
+      fetch('data/latest_signals.json?t='+Date.now()),
+      fetch('data/performance.json?t='+Date.now())
+    ]);
+    if(sr.ok){
+      const signals = await sr.json();
+      renderStatus(signals);
+      document.getElementById('signal-grid').innerHTML = signals.map(renderCard).join('');
+    }
+    if(pr.ok) renderPerf(await pr.json());
+  } catch(e){
+    document.getElementById('signal-grid').innerHTML =
+      '<div style="color:var(--bear);padding:2rem;font-size:12px">Failed to load signals: '+e.message+'</div>';
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
