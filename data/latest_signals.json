@@ -1,1 +1,432 @@
-[]
+[
+  {
+    "asset": "NDX",
+    "signal": "NO TRADE",
+    "price": 26519.0625,
+    "rule_signal": "NEUTRAL",
+    "reason": "RSI 74.0 > 70 \u2014 overbought, high reversal risk for long entry",
+    "gates": [
+      {
+        "gate": "REGIME",
+        "passed": true,
+        "reason": "ADX 88.4 \u2014 trending, signals reliable"
+      },
+      {
+        "gate": "TREND_ALIGN",
+        "passed": true,
+        "reason": "EMA aligned with long direction (trend_score=+1.00)"
+      },
+      {
+        "gate": "MOMENTUM",
+        "passed": false,
+        "reason": "RSI 74.0 > 70 \u2014 overbought, high reversal risk for long entry"
+      }
+    ],
+    "regime": {
+      "regime": "trending",
+      "adx": 88.4,
+      "detail": "ADX 88.4 \u2014 strong trend, EMAs aligned"
+    },
+    "breakdown": {
+      "trend_score": 1.0,
+      "trend_detail": {
+        "ema_structure": "+2 (9>18>27 strong bull)",
+        "ema_cross": "0",
+        "macd_pos": "-0.5 (below signal)",
+        "macd_cross": "-0.5 (fresh bear cross)"
+      },
+      "momentum_score": -2.0,
+      "momentum_detail": {
+        "rsi": "-2 (overbought 73.9)",
+        "smi": "0 (cross=False, RSI gate=73.9)"
+      },
+      "pivot_multiplier": 0.82,
+      "pivot_detail": "near S1 (-18%)",
+      "daily_trend": "+0.2 (daily trend bullish)",
+      "regime_adj": "\u00d71.0 (trending)",
+      "combined": 0.036,
+      "rsi": 73.95,
+      "adx": 88.4,
+      "atr": 151.2528,
+      "atr_pct": 0.0057,
+      "price": 26519.0625,
+      "pivot": 26599.1908,
+      "r1": 26638.4557,
+      "s1": 26529.2878
+    },
+    "risk_metrics": {
+      "sharpe": 12.9491,
+      "sortino": 29.795,
+      "sortino_gt_sharpe": true,
+      "zscore": -1.1373,
+      "atr_pct": 0.0057,
+      "win_rate": 0.4778,
+      "avg_win": 0.0063,
+      "avg_loss": 0.006,
+      "raw_kelly": 0.0,
+      "vol_scalar": 1.7533,
+      "zscore_scalar": 0.5,
+      "sharpe_scalar": 1.2,
+      "final_allocation": 0.0,
+      "direction": "long"
+    },
+    "ml_probability": 0.6165,
+    "data_quality": {
+      "source": "yfinance (Yahoo Finance)",
+      "using_cached": false,
+      "validation_passed": true,
+      "incomplete_candle_dropped": true,
+      "roll_candles_removed": 0,
+      "delay_note": "15-30 min delay typical for this source",
+      "last_candle_utc": "2026-04-20 14:00:00+00:00",
+      "rows_used": 38,
+      "data_warning": null
+    },
+    "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
+    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+  },
+  {
+    "asset": "TSX",
+    "signal": "NO TRADE",
+    "price": 34323.5,
+    "rule_signal": "NEUTRAL",
+    "reason": "Z-score -0.67 < 1.0 \u2014 signal not statistically significant",
+    "gates": [
+      {
+        "gate": "REGIME",
+        "passed": true,
+        "reason": "ADX 63.8 \u2014 trending, signals reliable"
+      },
+      {
+        "gate": "TREND_ALIGN",
+        "passed": true,
+        "reason": "EMA aligned with long direction (trend_score=+1.50)"
+      },
+      {
+        "gate": "MOMENTUM",
+        "passed": true,
+        "reason": "RSI 62.4 \u2014 acceptable for long"
+      },
+      {
+        "gate": "ZSCORE",
+        "passed": false,
+        "reason": "Z-score -0.67 < 1.0 \u2014 signal not statistically significant"
+      }
+    ],
+    "regime": {
+      "regime": "trending",
+      "adx": 63.84,
+      "detail": "ADX 63.8 \u2014 strong trend, EMAs aligned"
+    },
+    "breakdown": {
+      "trend_score": 1.5,
+      "trend_detail": {
+        "ema_structure": "+2 (9>18>27 strong bull)",
+        "ema_cross": "0",
+        "macd_pos": "-0.5 (below signal)",
+        "macd_cross": "0"
+      },
+      "momentum_score": -2.0,
+      "momentum_detail": {
+        "rsi": "-1 (elevated 62.4)",
+        "smi": "-1 (bear cross, RSI not oversold)"
+      },
+      "pivot_multiplier": 1.05,
+      "pivot_detail": "above pivot (+5%)",
+      "daily_trend": "+0.2 (daily trend bullish)",
+      "regime_adj": "\u00d71.0 (trending)",
+      "combined": 0.305,
+      "rsi": 62.39,
+      "adx": 63.84,
+      "atr": 143.2383,
+      "atr_pct": 0.0042,
+      "price": 34323.5,
+      "pivot": 34302.8867,
+      "r1": 34394.0234,
+      "s1": 34233.8828
+    },
+    "risk_metrics": {
+      "sharpe": 5.7413,
+      "sortino": 24.5684,
+      "sortino_gt_sharpe": true,
+      "zscore": -0.6707,
+      "atr_pct": 0.0042,
+      "win_rate": 0.5811,
+      "avg_win": 0.005,
+      "avg_loss": 0.0036,
+      "raw_kelly": 0.1393,
+      "vol_scalar": 2.0,
+      "zscore_scalar": 0.5,
+      "sharpe_scalar": 1.2,
+      "final_allocation": 0.1672,
+      "direction": "long"
+    },
+    "ml_probability": 0.5632,
+    "data_quality": {
+      "source": "yfinance (Yahoo Finance)",
+      "using_cached": false,
+      "validation_passed": true,
+      "incomplete_candle_dropped": true,
+      "roll_candles_removed": 0,
+      "delay_note": "15-30 min delay typical for this source",
+      "last_candle_utc": "2026-04-20 14:00:00+00:00",
+      "rows_used": 38,
+      "data_warning": null
+    },
+    "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
+    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+  },
+  {
+    "asset": "GOLD",
+    "signal": "NO TRADE",
+    "price": 4819.8999,
+    "rule_signal": "NEUTRAL",
+    "reason": "ADX 25.1 \u2014 transitioning, wait for clear direction",
+    "gates": [
+      {
+        "gate": "REGIME",
+        "passed": false,
+        "reason": "ADX 25.1 \u2014 transitioning, wait for clear direction"
+      }
+    ],
+    "regime": {
+      "regime": "transitioning",
+      "adx": 25.14,
+      "detail": "ADX 25.1 \u2014 mixed conditions"
+    },
+    "breakdown": {
+      "trend_score": -1.5,
+      "trend_detail": {
+        "ema_structure": "-1 (9<18 mild bear)",
+        "ema_cross": "0",
+        "macd_pos": "-0.5 (below signal)",
+        "macd_cross": "0"
+      },
+      "momentum_score": 0,
+      "momentum_detail": {
+        "rsi": "0 (neutral 52.1)",
+        "smi": "0 (cross=False, RSI gate=52.1)"
+      },
+      "pivot_multiplier": 0.82,
+      "pivot_detail": "near S1 (-18%)",
+      "daily_trend": "0 (daily neutral)",
+      "regime_adj": "\u00d71.0 (trending)",
+      "combined": -0.738,
+      "rsi": 52.06,
+      "adx": 25.14,
+      "atr": 48.2857,
+      "atr_pct": 0.01,
+      "price": 4819.8999,
+      "pivot": 4834.9665,
+      "r1": 4851.1331,
+      "s1": 4822.6331
+    },
+    "risk_metrics": {
+      "sharpe": 0.323,
+      "sortino": 0.3552,
+      "sortino_gt_sharpe": true,
+      "zscore": -1.5104,
+      "atr_pct": 0.01,
+      "win_rate": 0.4694,
+      "avg_win": 0.0067,
+      "avg_loss": 0.0052,
+      "raw_kelly": 0.0,
+      "vol_scalar": 0.9982,
+      "zscore_scalar": 0.5,
+      "sharpe_scalar": 0.5,
+      "final_allocation": 0.0,
+      "direction": "long"
+    },
+    "ml_probability": 0.4878,
+    "data_quality": {
+      "source": "yfinance (Yahoo Finance)",
+      "using_cached": false,
+      "validation_passed": true,
+      "incomplete_candle_dropped": true,
+      "roll_candles_removed": 0,
+      "delay_note": "15-30 min delay typical for this source",
+      "last_candle_utc": "2026-04-20 14:00:00+00:00",
+      "rows_used": 88,
+      "data_warning": null
+    },
+    "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
+    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+  },
+  {
+    "asset": "CRUDE",
+    "signal": "NO TRADE",
+    "price": 87.33,
+    "rule_signal": "NEUTRAL",
+    "reason": "EMA misaligned for long: -2 (9<18<27 strong bear)",
+    "gates": [
+      {
+        "gate": "REGIME",
+        "passed": true,
+        "reason": "ADX 35.0 \u2014 trending, signals reliable"
+      },
+      {
+        "gate": "TREND_ALIGN",
+        "passed": false,
+        "reason": "EMA misaligned for long: -2 (9<18<27 strong bear)"
+      }
+    ],
+    "regime": {
+      "regime": "trending",
+      "adx": 35.03,
+      "detail": "ADX 35.0 \u2014 strong trend, EMAs aligned"
+    },
+    "breakdown": {
+      "trend_score": -1.0,
+      "trend_detail": {
+        "ema_structure": "-2 (9<18<27 strong bear)",
+        "ema_cross": "0",
+        "macd_pos": "+0.5 (above signal)",
+        "macd_cross": "+0.5 (fresh bull cross)"
+      },
+      "momentum_score": 1,
+      "momentum_detail": {
+        "rsi": "+1 (low 43.1)",
+        "smi": "0 (cross=False, RSI gate=43.1)"
+      },
+      "pivot_multiplier": 1.15,
+      "pivot_detail": "above R1 (+15%)",
+      "daily_trend": "+0.2 (daily trend bullish)",
+      "regime_adj": "\u00d71.0 (trending)",
+      "combined": -0.03,
+      "rsi": 43.09,
+      "adx": 35.03,
+      "atr": 2.1421,
+      "atr_pct": 0.0245,
+      "price": 87.33,
+      "pivot": 86.3167,
+      "r1": 87.1833,
+      "s1": 85.0933
+    },
+    "risk_metrics": {
+      "sharpe": -1.9014,
+      "sortino": -2.0097,
+      "sortino_gt_sharpe": false,
+      "zscore": 1.201,
+      "atr_pct": 0.0245,
+      "win_rate": 0.5765,
+      "avg_win": 0.0153,
+      "avg_loss": 0.0207,
+      "raw_kelly": 0.0011,
+      "vol_scalar": 0.4077,
+      "zscore_scalar": 0.6005,
+      "sharpe_scalar": 0.5,
+      "final_allocation": 0.0001,
+      "direction": "long"
+    },
+    "ml_probability": 0.5127,
+    "data_quality": {
+      "source": "yfinance (Yahoo Finance)",
+      "using_cached": false,
+      "validation_passed": true,
+      "incomplete_candle_dropped": true,
+      "roll_candles_removed": 8,
+      "delay_note": "15-30 min delay typical for this source",
+      "last_candle_utc": "2026-04-20 14:00:00+00:00",
+      "rows_used": 77,
+      "data_warning": null
+    },
+    "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
+    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+  },
+  {
+    "asset": "NATGAS",
+    "signal": "NO TRADE",
+    "price": 2.714,
+    "rule_signal": "BUY",
+    "reason": "ML 49.0% < 50% minimum for long",
+    "gates": [
+      {
+        "gate": "REGIME",
+        "passed": true,
+        "reason": "ADX 32.7 \u2014 trending, signals reliable"
+      },
+      {
+        "gate": "TREND_ALIGN",
+        "passed": true,
+        "reason": "EMA aligned with long direction (trend_score=+2.50)"
+      },
+      {
+        "gate": "MOMENTUM",
+        "passed": true,
+        "reason": "RSI 58.7 \u2014 acceptable for long"
+      },
+      {
+        "gate": "ZSCORE",
+        "passed": true,
+        "reason": "Z-score 1.87 \u2014 statistically significant for long"
+      },
+      {
+        "gate": "QUALITY",
+        "passed": false,
+        "reason": "ML 49.0% < 50% minimum for long"
+      }
+    ],
+    "regime": {
+      "regime": "trending",
+      "adx": 32.68,
+      "detail": "ADX 32.7 \u2014 strong trend, EMAs aligned"
+    },
+    "breakdown": {
+      "trend_score": 2.5,
+      "trend_detail": {
+        "ema_structure": "+2 (9>18>27 strong bull)",
+        "ema_cross": "0",
+        "macd_pos": "+0.5 (above signal)",
+        "macd_cross": "0"
+      },
+      "momentum_score": 0,
+      "momentum_detail": {
+        "rsi": "0 (neutral 58.7)",
+        "smi": "0 (cross=False, RSI gate=58.7)"
+      },
+      "pivot_multiplier": 1.05,
+      "pivot_detail": "above pivot (+5%)",
+      "daily_trend": "-0.2 (daily trend bearish)",
+      "regime_adj": "\u00d71.0 (trending)",
+      "combined": 1.375,
+      "rsi": 58.68,
+      "adx": 32.68,
+      "atr": 0.0381,
+      "atr_pct": 0.014,
+      "price": 2.714,
+      "pivot": 2.6983,
+      "r1": 2.7247,
+      "s1": 2.6637
+    },
+    "risk_metrics": {
+      "sharpe": 6.2848,
+      "sortino": 10.303,
+      "sortino_gt_sharpe": true,
+      "zscore": 1.8669,
+      "atr_pct": 0.014,
+      "win_rate": 0.4578,
+      "avg_win": 0.0091,
+      "avg_loss": 0.0108,
+      "raw_kelly": 0.0,
+      "vol_scalar": 0.7129,
+      "zscore_scalar": 0.9335,
+      "sharpe_scalar": 1.2,
+      "final_allocation": 0.0,
+      "direction": "long"
+    },
+    "ml_probability": 0.4897,
+    "data_quality": {
+      "source": "yfinance (Yahoo Finance)",
+      "using_cached": false,
+      "validation_passed": true,
+      "incomplete_candle_dropped": true,
+      "roll_candles_removed": 0,
+      "delay_note": "15-30 min delay typical for this source",
+      "last_candle_utc": "2026-04-20 14:00:00+00:00",
+      "rows_used": 85,
+      "data_warning": null
+    },
+    "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
+    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+  }
+]
