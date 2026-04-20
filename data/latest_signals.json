@@ -83,7 +83,7 @@
       "data_warning": null
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+    "timestamp": "2026-04-20T17:39:26.853448+00:00"
   },
   {
     "asset": "TSX",
@@ -174,7 +174,7 @@
       "data_warning": null
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+    "timestamp": "2026-04-20T17:39:26.853448+00:00"
   },
   {
     "asset": "GOLD",
@@ -250,7 +250,7 @@
       "data_warning": null
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+    "timestamp": "2026-04-20T17:39:26.853448+00:00"
   },
   {
     "asset": "CRUDE",
@@ -331,7 +331,7 @@
       "data_warning": null
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+    "timestamp": "2026-04-20T17:39:26.853448+00:00"
   },
   {
     "asset": "NATGAS",
@@ -427,6 +427,6 @@
       "data_warning": null
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-20T16:43:48.213274+00:00"
+    "timestamp": "2026-04-20T17:39:26.853448+00:00"
   }
 ]
