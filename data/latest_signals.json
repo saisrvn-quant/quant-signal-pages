@@ -88,7 +88,7 @@
       "data_warning": null
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-21T16:36:48.257507+00:00"
+    "timestamp": "2026-04-21T17:38:51.541492+00:00"
   },
   {
     "asset": "TSX",
@@ -184,7 +184,7 @@
       "data_warning": null
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-21T16:36:48.257507+00:00"
+    "timestamp": "2026-04-21T17:38:51.541492+00:00"
   },
   {
     "asset": "GOLD",
@@ -232,9 +232,9 @@
       "s1": 4778.0999
     },
     "risk_metrics": {
-      "sharpe": -6.6042,
-      "sortino": -8.1161,
-      "sortino_gt_sharpe": false,
+      "sharpe": -5.5947,
+      "sortino": -5.4976,
+      "sortino_gt_sharpe": true,
       "zscore": -0.6449,
       "atr_pct": 0.0055,
       "win_rate": 0.4468,
@@ -247,7 +247,7 @@
       "final_allocation": 0.0,
       "direction": "long"
     },
-    "ml_probability": 0.4988,
+    "ml_probability": 0.4992,
     "data_quality": {
       "source": "yfinance (Yahoo Finance)",
       "using_cached": false,
@@ -260,11 +260,11 @@
       "data_warning": null
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-21T16:36:48.257507+00:00"
+    "timestamp": "2026-04-21T17:38:51.541492+00:00"
   },
   {
     "asset": "CRUDE",
-    "timestamp": "2026-04-21T16:36:48.257507+00:00",
+    "timestamp": "2026-04-21T17:38:51.541492+00:00",
     "signal": "SELL",
     "rule_signal": "SELL",
     "ml_action": "confirmed (ML 48.9%)",
@@ -484,6 +484,6 @@
       "data_warning": null
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-21T16:36:48.257507+00:00"
+    "timestamp": "2026-04-21T17:38:51.541492+00:00"
   }
 ]
