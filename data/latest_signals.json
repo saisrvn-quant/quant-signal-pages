@@ -1,1 +1,93 @@
-[]
+[
+  {
+    "asset": "NIFTY",
+    "signal": "NO TRADE",
+    "price": 24209.1992,
+    "rule_signal": "BUY",
+    "reason": "Z-score 0.86 < 1.0 \u2014 signal not statistically significant",
+    "gates": [
+      {
+        "gate": "REGIME",
+        "passed": true,
+        "reason": "ADX 33.2 \u2014 trending, signals reliable"
+      },
+      {
+        "gate": "TREND_ALIGN",
+        "passed": true,
+        "reason": "EMA aligned with long direction (trend_score=+1.50)"
+      },
+      {
+        "gate": "MOMENTUM",
+        "passed": true,
+        "reason": "RSI 45.6 \u2014 acceptable for long"
+      },
+      {
+        "gate": "ZSCORE",
+        "passed": false,
+        "reason": "Z-score 0.86 < 1.0 \u2014 signal not statistically significant"
+      }
+    ],
+    "regime": {
+      "regime": "trending",
+      "adx": 33.24,
+      "detail": "ADX 33.2 \u2014 strong trend, EMAs aligned"
+    },
+    "breakdown": {
+      "trend_score": 1.5,
+      "trend_detail": {
+        "ema_structure": "+2 (9>18>27 strong bull)",
+        "ema_cross": "0",
+        "macd_pos": "-0.5 (below signal)",
+        "macd_cross": "0"
+      },
+      "momentum_score": 0,
+      "momentum_detail": {
+        "rsi": "0 (neutral 45.6)",
+        "smi": "0 (cross=False, RSI gate=45.6)"
+      },
+      "pivot_multiplier": 1.0,
+      "pivot_detail": "at pivot (neutral)",
+      "daily_trend": "+0.2 (daily trend bullish)",
+      "regime_adj": "\u00d71.0 (trending)",
+      "combined": 1.1,
+      "rsi": 45.63,
+      "adx": 33.24,
+      "atr": 109.1431,
+      "atr_pct": 0.0045,
+      "price": 24209.1992,
+      "pivot": 24229.0,
+      "r1": 24285.1504,
+      "s1": 24166.3496
+    },
+    "risk_metrics": {
+      "sharpe": -10.0,
+      "sortino": -10.0,
+      "sortino_gt_sharpe": false,
+      "zscore": 0.8626,
+      "atr_pct": 0.0045,
+      "win_rate": 0.5341,
+      "avg_win": 0.0053,
+      "avg_loss": 0.005,
+      "raw_kelly": 0.0454,
+      "vol_scalar": 2.0,
+      "zscore_scalar": 0.5,
+      "sharpe_scalar": 0.5,
+      "final_allocation": 0.0227,
+      "direction": "long"
+    },
+    "ml_probability": 0.5345,
+    "data_quality": {
+      "source": "yfinance (Yahoo Finance)",
+      "using_cached": false,
+      "validation_passed": true,
+      "incomplete_candle_dropped": true,
+      "roll_candles_removed": 0,
+      "delay_note": "15-30 min delay typical for this source",
+      "last_candle_utc": "2026-04-23 06:00:00+00:00",
+      "rows_used": 36,
+      "data_warning": null
+    },
+    "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
+    "timestamp": "2026-04-23T09:15:30.447430+00:00"
+  }
+]
