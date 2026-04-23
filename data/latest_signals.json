@@ -85,10 +85,10 @@
       "delay_note": "15-30 min delay typical for this source",
       "last_candle_utc": "2026-04-23 14:00:00+00:00",
       "rows_used": 38,
-      "data_warning": null
+      "data_warning": "Data appears stale (last candle > 4h ago)"
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-23T17:05:46.582156+00:00"
+    "timestamp": "2026-04-23T18:04:28.099147+00:00"
   },
   {
     "asset": "TSX",
@@ -166,10 +166,10 @@
       "delay_note": "15-30 min delay typical for this source",
       "last_candle_utc": "2026-04-23 14:00:00+00:00",
       "rows_used": 38,
-      "data_warning": null
+      "data_warning": "Data appears stale (last candle > 4h ago)"
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-23T17:05:46.582156+00:00"
+    "timestamp": "2026-04-23T18:04:28.099147+00:00"
   },
   {
     "asset": "GOLD",
@@ -247,10 +247,10 @@
       "delay_note": "15-30 min delay typical for this source",
       "last_candle_utc": "2026-04-23 14:00:00+00:00",
       "rows_used": 100,
-      "data_warning": null
+      "data_warning": "Data appears stale (last candle > 4h ago)"
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-23T17:05:46.582156+00:00"
+    "timestamp": "2026-04-23T18:04:28.099147+00:00"
   },
   {
     "asset": "CRUDE",
@@ -343,10 +343,10 @@
       "delay_note": "15-30 min delay typical for this source",
       "last_candle_utc": "2026-04-23 14:00:00+00:00",
       "rows_used": 90,
-      "data_warning": null
+      "data_warning": "Data appears stale (last candle > 4h ago)"
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-23T17:05:46.582156+00:00"
+    "timestamp": "2026-04-23T18:04:28.099147+00:00"
   },
   {
     "asset": "NATGAS",
@@ -434,9 +434,9 @@
       "delay_note": "15-30 min delay typical for this source",
       "last_candle_utc": "2026-04-23 14:00:00+00:00",
       "rows_used": 95,
-      "data_warning": null
+      "data_warning": "Data appears stale (last candle > 4h ago)"
     },
     "disclaimer": "RESEARCH TOOL ONLY \u2014 NOT FINANCIAL ADVICE. All signals, allocations, and risk metrics are outputs of an automated quantitative model for research and educational purposes only. Data sourced from yfinance (Yahoo Finance) \u2014 subject to delay (15-30 min), gaps, and inaccuracies. Verify all data independently. Past signal accuracy does not guarantee future results. Do not trade based solely on this output.",
-    "timestamp": "2026-04-23T17:05:46.582156+00:00"
+    "timestamp": "2026-04-23T18:04:28.099147+00:00"
   }
 ]
