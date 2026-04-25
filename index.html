@@ -3,7 +3,7 @@
 <head>
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width,initial-scale=1'>
-<meta name='build-ts' content='2026-04-25 12:10 UTC'>
+<meta name='build-ts' content='2026-04-25 12:52 UTC'>
 <title>Quant Signal</title>
 <style>
 :root{--bg:#08090d;--bg2:#0f1117;--bg3:#151820;--bg4:#1b1f2e;
@@ -33,8 +33,10 @@ tr:hover td{background:rgba(255,255,255,.03)}
 <div class='tabs'><div class='tab active' onclick="show('SIGNAL')">SIGNAL</div><div class='tab' onclick="show('NQ')">NQ</div><div class='tab' onclick="show('NG')">NG</div><div class='tab' onclick="show('TSX')">TSX</div><div class='tab' onclick="show('GC')">GC</div><div class='tab' onclick="show('NIFTY')">NIFTY</div><div class='tab' onclick="show('FRAMEWORK')">FRAMEWORK</div><div class='tab' onclick="show('CHECKLIST')">CHECKLIST</div><div class='tab' onclick="show('CROSS')">CROSS</div></div>
 <div id='pane-SIGNAL' class='pane active'>
 <h1>SIGNAL — Live state</h1>
-<div class='info'>Page built: <b>2026-04-25 12:10 UTC</b> · Auto-reloads every 30 min when new build detected.<br>
-<b>Bar TS</b> reflects the bar fed to the matcher. If marked <span class='warn'>(observ-truncated)</span>, that asset's indicators CSV was unavailable and the system fell back to the observations CSV (which excludes the most recent ~9 bars 2HR / ~20 bars daily). Run observe_v4 to repopulate indicators files.</div>
+<div class='info'>Page built: <b>2026-04-25 12:52 UTC</b> · Auto-reloads every 30 min when new build detected.<br>
+<b>Bar TS</b> reflects the bar fed to the matcher. If marked <span class='warn'>(observ-truncated)</span>, that asset's indicators CSV was unavailable and the system fell back to the observations CSV (which excludes the most recent ~9 bars 2HR / ~20 bars daily). Run observe_v4 to repopulate indicators files.<br>
+<b>Daily Bar TS lag:</b> daily bars finalize hours after their session closes. yfinance commonly serves yesterday's daily bar (or earlier on weekends) — this is normal and does not affect signal validity for daily-horizon trades. 2HR bars refresh more aggressively.<br>
+<b>Skip-zones</b> (CPR_INSIDE, P_R1, S1_P) are excluded from setup tables — current bar in a skip-zone shows as "no match" until price breaks out above TC or below BC.</div>
 <table>
 <tr><th>Asset</th><th>TF</th><th>Zone</th><th>EMA</th><th>MACD</th>
 <th>ADX</th><th>RSI</th><th>Daily align</th><th>Match</th>
@@ -95,7 +97,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
 </tr>
 <tr>
 <td><b>GC</b></td><td>2h</td>
-<td>CPR_INSIDE</td><td>BEAR</td><td>POS_GROW</td>
+<td>CPR_INSIDE <span class='warn' style='font-size:9px'>(skip-zone · wait for breakout)</span></td><td>BEAR</td><td>POS_GROW</td>
 <td>TREND</td><td>NEUTRAL</td>
 <td>—</td>
 <td>—</td>
@@ -104,7 +106,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
 </tr>
 <tr>
 <td><b>GC</b></td><td>daily</td>
-<td>CPR_INSIDE</td><td>MIXED</td><td>NEG_SHRK</td>
+<td>CPR_INSIDE <span class='warn' style='font-size:9px'>(skip-zone · wait for breakout)</span></td><td>MIXED</td><td>NEG_SHRK</td>
 <td>TREND</td><td>NEUTRAL</td>
 <td>—</td>
 <td>—</td>
@@ -113,7 +115,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
 </tr>
 <tr>
 <td><b>NIFTY</b></td><td>2h</td>
-<td>P_R1</td><td>BULL</td><td>NEG_GROW</td>
+<td>P_R1 <span class='warn' style='font-size:9px'>(skip-zone · wait for breakout)</span></td><td>BULL</td><td>NEG_GROW</td>
 <td>TREND</td><td>OVERSOLD</td>
 <td>—</td>
 <td>—</td>
@@ -139,31 +141,31 @@ Alloc ≥ 50% = actionable · Daily align ✓ = 2HR and daily zones agree
 <table>
 <tr><th>Last seen (UTC)</th><th>Asset</th><th>TF</th><th>Zone</th><th>EMA</th><th>MACD</th>
 <th>Side</th><th class='num'>n</th><th class='num'>Win%</th><th class='num'>Alloc</th></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NQ</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>46</td><td class='num pos'>63.0%</td><td class='num pos'>60%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>NEG_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>46</td><td class='num pos'>60.9%</td><td class='num pos'>60%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>S2_S1</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>104</td><td class='num pos'>40.4%</td><td class='num pos'>50%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>S2_S1</td><td>BULL</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>44</td><td class='num pos'>54.5%</td><td class='num pos'>50%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>BC</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>57</td><td class='num pos'>59.6%</td><td class='num pos'>52%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>S2</td><td>BULL</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>34</td><td class='num pos'>58.8%</td><td class='num pos'>82%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>S2</td><td>MIXED</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>30</td><td class='num pos'>83.3%</td><td class='num pos'>82%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>S1</td><td>BEAR</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>61</td><td class='num pos'>65.6%</td><td class='num pos'>60%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>MIXED</td><td>POS_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>49</td><td class='num pos'>63.3%</td><td class='num pos'>52%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>BC</td><td>MIXED</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>25</td><td class='num pos'>92.0%</td><td class='num pos'>52%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>BULL</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>35</td><td class='num pos'>68.6%</td><td class='num pos'>57%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>S3_S2</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>33</td><td class='num pos'>69.7%</td><td class='num pos'>90%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>MIXED</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>32</td><td class='num pos'>28.1%</td><td class='num pos'>50%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>S1</td><td>BEAR</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>68</td><td class='num pos'>42.6%</td><td class='num pos'>65%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>S3_S2</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>122</td><td class='num pos'>44.3%</td><td class='num pos'>90%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>S2</td><td>BEAR</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>52</td><td class='num pos'>38.5%</td><td class='num pos'>82%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>NEG_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>240</td><td class='num pos'>40.4%</td><td class='num pos'>55%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>44</td><td class='num pos'>38.6%</td><td class='num pos'>60%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>BC</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>39</td><td class='num pos'>43.6%</td><td class='num pos'>52%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>66</td><td class='num pos'>24.2%</td><td class='num pos'>50%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>BC</td><td>BULL</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>33</td><td class='num pos'>72.7%</td><td class='num pos'>52%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>S2</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>75</td><td class='num pos'>52.0%</td><td class='num pos'>82%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>TC</td><td>BEAR</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>35</td><td class='num pos'>60.0%</td><td class='num pos'>57%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>88</td><td class='num pos'>48.9%</td><td class='num pos'>65%</td></tr>
-<tr><td class='muted'>2026-04-25 11:45</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>BEAR</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>29</td><td class='num pos'>48.3%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NIFTY</b></td><td>daily</td><td>BC</td><td>MIXED</td><td>NEG_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>41</td><td class='num pos'>41.5%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>MIXED</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>32</td><td class='num pos'>28.1%</td><td class='num pos'>50%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>S2_S1</td><td>BULL</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>44</td><td class='num pos'>54.5%</td><td class='num pos'>50%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>BC</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>57</td><td class='num pos'>59.6%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>S2</td><td>BULL</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>34</td><td class='num pos'>58.8%</td><td class='num pos'>82%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>S2</td><td>MIXED</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>30</td><td class='num pos'>83.3%</td><td class='num pos'>82%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>S1</td><td>BEAR</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>61</td><td class='num pos'>65.6%</td><td class='num pos'>60%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>MIXED</td><td>POS_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>49</td><td class='num pos'>63.3%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>BC</td><td>MIXED</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>25</td><td class='num pos'>92.0%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>BULL</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>35</td><td class='num pos'>68.6%</td><td class='num pos'>57%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>S3_S2</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>33</td><td class='num pos'>69.7%</td><td class='num pos'>90%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>NEG_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>46</td><td class='num pos'>60.9%</td><td class='num pos'>60%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S3_S2</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>122</td><td class='num pos'>44.3%</td><td class='num pos'>90%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>BEAR</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>29</td><td class='num pos'>48.3%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S2</td><td>BEAR</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>52</td><td class='num pos'>38.5%</td><td class='num pos'>82%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>NEG_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>240</td><td class='num pos'>40.4%</td><td class='num pos'>55%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>44</td><td class='num pos'>38.6%</td><td class='num pos'>60%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>BC</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>39</td><td class='num pos'>43.6%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>66</td><td class='num pos'>24.2%</td><td class='num pos'>50%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>BC</td><td>BULL</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>33</td><td class='num pos'>72.7%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S2</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>75</td><td class='num pos'>52.0%</td><td class='num pos'>82%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>TC</td><td>BEAR</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>35</td><td class='num pos'>60.0%</td><td class='num pos'>57%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>88</td><td class='num pos'>48.9%</td><td class='num pos'>65%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>270</td><td class='num pos'>51.5%</td><td class='num pos'>50%</td></tr>
+<tr><td class='muted'>2026-04-25 12:10</td><td><b>NG</b></td><td>daily</td><td>S2_S1</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>104</td><td class='num pos'>40.4%</td><td class='num pos'>50%</td></tr>
 </table>
 </div>
 <div id='pane-NQ' class='pane'>
@@ -326,11 +328,249 @@ Alloc ≥ 50% = actionable · Daily align ✓ = 2HR and daily zones agree
 <th class='num'>Score</th><th class='num'>Alloc</th><th>Daily</th></tr>
 <tr><td>TC</td><td>MIXED</td><td>POS_SHRK</td><td>CONTRA</td><td class='num'>30</td><td class='num pos' >30.0%</td><td class='num neg'>-4.308</td><td class='num'>-8.931</td><td class='num'>+0.920</td><td class='num'>-1.16</td><td class='num pos'>52%</td><td>✓</td></tr><tr><td>BC</td><td>BEAR</td><td>NEG_GROW</td><td>CONTRA</td><td class='num'>44</td><td class='num pos' >54.5%</td><td class='num neg'>-1.967</td><td class='num'>-2.856</td><td class='num'>+3.953</td><td class='num'>-1.14</td><td class='num pos'>52%</td><td>✓</td></tr><tr><td>S2</td><td>MIXED</td><td>NEG_GROW</td><td>CONTRA</td><td class='num'>27</td><td class='num pos' >44.4%</td><td class='num neg'>-1.400</td><td class='num'>-3.646</td><td class='num'>+2.168</td><td class='num'>-1.14</td><td class='num pos'>55%</td><td>—</td></tr><tr><td>TC</td><td>BULL</td><td>POS_GROW</td><td>CONTRA</td><td class='num'>42</td><td class='num pos' >50.0%</td><td class='num neg'>-1.401</td><td class='num'>-2.777</td><td class='num'>+1.718</td><td class='num'>-0.97</td><td class='num pos'>52%</td><td>✓</td></tr><tr><td>S2_S1</td><td>MIXED</td><td>NEG_GROW</td><td>CONTRA</td><td class='num'>28</td><td class='num pos' >28.6%</td><td class='num neg'>-2.154</td><td class='num'>-3.638</td><td class='num'>+0.278</td><td class='num'>-0.92</td><td class='num pos'>75%</td><td>✓</td></tr><tr><td>S2</td><td>BEAR</td><td>NEG_GROW</td><td>CONTRA</td><td class='num'>37</td><td class='num pos' >51.4%</td><td class='num neg'>-3.461</td><td class='num'>-9.730</td><td class='num'>+3.359</td><td class='num'>-0.91</td><td class='num pos'>55%</td><td>—</td></tr><tr><td>BC</td><td>MIXED</td><td>NEG_SHRK</td><td>CONTRA</td><td class='num'>34</td><td class='num pos' >50.0%</td><td class='num neg'>-0.775</td><td class='num'>-5.460</td><td class='num'>+4.800</td><td class='num'>-0.81</td><td class='num pos'>57%</td><td>✓</td></tr><tr><td>S1</td><td>MIXED</td><td>NEG_GROW</td><td>CONTRA</td><td class='num'>28</td><td class='num pos' >46.4%</td><td class='num neg'>-1.402</td><td class='num'>-3.786</td><td class='num'>+2.908</td><td class='num'>-0.74</td><td class='num pos'>60%</td><td>✓</td></tr><tr><td>S2_S1</td><td>BEAR</td><td>NEG_SHRK</td><td>CONTRA</td><td class='num'>17</td><td class='num pos' >47.1%</td><td class='num neg'>-0.202</td><td class='num'>-4.397</td><td class='num'>+4.719</td><td class='num'>-0.66</td><td class='num pos'>80%</td><td>✓</td></tr><tr><td>TC</td><td>MIXED</td><td>POS_GROW</td><td>CONTRA</td><td class='num'>19</td><td class='num pos' >42.1%</td><td class='num neg'>-1.976</td><td class='num'>-4.061</td><td class='num'>+0.950</td><td class='num'>-0.55</td><td class='num pos'>52%</td><td>✓</td></tr><tr><td>BC</td><td>MIXED</td><td>NEG_GROW</td><td>CONTRA</td><td class='num'>41</td><td class='num pos' >41.5%</td><td class='num neg'>-1.306</td><td class='num'>-5.648</td><td class='num'>+3.845</td><td class='num'>-0.54</td><td class='num pos'>52%</td><td>✓</td></tr></table>
 </div>
-<div id='pane-FRAMEWORK' class='pane'><h1>Framework</h1><p>L0-L5 indicator hierarchy · pivot/CPR zones · 2HR uses prior-WEEK pivots · daily uses prior-MONTH pivots · Contra vs Trend types · consistency gate across forward windows.</p></div>
-<div id='pane-CHECKLIST' class='pane'><h1>Checklist</h1><ol><li>Confirm zone + ema_stack + macd_h matches a top setup</li><li>Verify daily alignment (bull_d list)</li><li>Check ADX regime not in avoid list</li><li>Apply alloc multiplier chain</li><li>Stop = p25 of that combo</li><li>Time stop: 9 bars (2HR) / 20 bars (daily)</li></ol></div>
-<div id='pane-CROSS' class='pane'><h1>Cross-asset</h1><p>See individual asset tabs for full setup tables. Only NG and NIFTY have confirmed short sides. NQ / TSX / GC shorts are hedges only.</p></div>
+<div id='pane-FRAMEWORK' class='pane'>
+<h1>FRAMEWORK</h1>
+<div class='info'>Rulebook last rebuilt: <b>2026-04-25T11:41:34</b> (UTC) · Rebuild cadence: 1st & 15th of each month</div>
+
+<h2>Method overview</h2>
+<p>Every bar is classified into a (zone, ema_stack, macd_h) triplet. The rulebook groups the historical record by triplet, computes forward returns at multiple windows, and keeps only triplets where returns are consistently positive (or consistently negative for shorts) across <b>all</b> windows. The current bar's triplet is then matched against the rulebook each run.</p>
+
+<h2>L0–L5 indicator hierarchy (37 indicators)</h2>
+<ul>
+<li><b>L0 Pivot/CPR:</b> zone, dist_P, cpr_width, cpr_dir, cpr_vrg</li>
+<li><b>L1 Trend:</b> ema_stack (EMA9/18/27), vwap_pos, lr_slope, ema_cross</li>
+<li><b>L2 Momentum:</b> rsi, rsi_div, macd_h (NEG_GROW/NEG_SHRK/POS_GROW/POS_SHRK), roc, smi</li>
+<li><b>L3 Structure:</b> bb_width, bb_sq, atrp, adx, macd_h_chg</li>
+<li><b>L4 Regime:</b> regime_label (ADX+EMA stack), vol_spike_flag (vol-of-vol expansion)</li>
+<li><b>L5 Volatility:</b> atr_of_atr, ewma_vol, roll_std</li>
+</ul>
+
+<h2>Pivot construction (L0)</h2>
+<ul>
+<li><b>2HR bars:</b> previous-WEEK high/low/close → weekly pivots → zone bins</li>
+<li><b>Daily bars:</b> previous-MONTH high/low/close → monthly pivots → zone bins</li>
+<li>Zones: BELOW_S3, S3, S3_S2, S2, S2_S1, S1, BC (below pivot inside CPR), TC (above pivot inside CPR), R1, R1_R2, R2, R2_R3, R3, ABOVE_R3</li>
+</ul>
+
+<h2>Per-asset dataset</h2>
+<table>
+<tr><th>Asset</th><th class='num'>2HR longs</th><th class='num'>2HR shorts</th>
+<th class='num'>Daily longs</th><th class='num'>Daily shorts</th><th class='num'>MIN n</th></tr>
+<tr><td><b>NQ</b></td><td class='num'>28</td><td class='num'>15</td><td class='num'>24</td><td class='num'>3</td><td class='num'>25</td></tr><tr><td><b>NG</b></td><td class='num'>26</td><td class='num'>13</td><td class='num'>17</td><td class='num'>9</td><td class='num'>20</td></tr><tr><td><b>TSX</b></td><td class='num'>20</td><td class='num'>10</td><td class='num'>26</td><td class='num'>7</td><td class='num'>15</td></tr><tr><td><b>GC</b></td><td class='num'>32</td><td class='num'>8</td><td class='num'>31</td><td class='num'>4</td><td class='num'>20</td></tr><tr><td><b>NIFTY</b></td><td class='num'>23</td><td class='num'>14</td><td class='num'>26</td><td class='num'>11</td><td class='num'>15</td></tr>
+</table>
+
+<h2>Forward-return windows (consistency gate)</h2>
+<ul>
+<li><b>2HR setups:</b> bars 3, 6, 9 — must be positive (long) or negative (short) at ALL three</li>
+<li><b>Daily setups:</b> days 5, 10, 20 — must be positive (long) or negative (short) at ALL three</li>
+<li>This filter eliminates noise — a triplet that wins at 3 bars but reverses by 9 won't pass</li>
+</ul>
+
+<h2>Setup types & philosophy</h2>
+<table>
+<tr><th>Type</th><th>Where</th><th>Logic</th><th>Sizing</th></tr>
+<tr><td><b>CONTRA (TYPE A)</b></td><td>S-zones, BC, TC, BELOW_S3</td><td>Buy weakness — price extended down from fair value</td><td>Full base alloc</td></tr>
+<tr><td><b>TREND (TYPE B)</b></td><td>R-zones, ABOVE_R3</td><td>Buy pullback inside ongoing uptrend (NQ/TSX); short overextension (NG)</td><td>Base × 0.6</td></tr>
+<tr><td><b>SPECIAL (TYPE C)</b></td><td>2HR R-zone + daily S-zone simultaneously</td><td>Weekly resistance = monthly value zone — highest conviction</td><td>Use TYPE A rates</td></tr>
+</table>
+
+<h2>Allocation multiplier sequence (apply in order)</h2>
+<ol>
+<li>Base alloc from zone (BELOW_S3=75%, S3=70%, S3_S2=65%, S2=55%, S2_S1=50%, S1=40%, BC/TC=35%, R1=35%, R1_R2=30%, R2=45%, R2_R3=35%, R3=55%, ABOVE_R3=60%)</li>
+<li>If TYPE B (R-zone trend continuation) → base × 0.6</li>
+<li>If daily zone in bull_d list AND trade is long → result × 1.5 (cap 90%)</li>
+<li>If daily zone in bear_d list AND trade is long → 0% (skip)</li>
+<li>If VOL_SPIKE_FLAG=1 (vol-of-vol expansion) → subtract 20pp</li>
+<li>If MACD = NEG_SHRK at entry bar → +5pp bonus (exhaustion confirmed)</li>
+<li>If watchlist (n below threshold) → cap at 30% regardless</li>
+<li>If TYPE C → skip step 2 discount, use TYPE A rates</li>
+<li>Hard cap 90% absolute maximum</li>
+</ol>
+
+<h2>3-layer entry protocol</h2>
+<table>
+<tr><th>Layer</th><th>Gate</th><th>Action on conflict</th></tr>
+<tr><td>1 Primary signal</td><td>zone + ema_stack + macd_h matches top setup</td><td>No trade</td></tr>
+<tr><td>2 ADX regime</td><td>zone + adx not in avoid list</td><td>Reduce alloc 30%</td></tr>
+<tr><td>3 RSI timing</td><td>zone + macd + rsi acceptable for direction</td><td>Wait 1 bar</td></tr>
+</table>
+
+<h2>MACD histogram interpretation</h2>
+<table>
+<tr><th>State</th><th>Meaning</th><th>S-zones (long)</th><th>R-zones (long)</th><th>R-zones (short, NG)</th></tr>
+<tr><td><b>NEG_SHRK</b></td><td>Negative, shrinking — DOWN exhausted</td><td class='pos'>BEST entry</td><td class='pos'>Buy pullback</td><td class='muted'>Hold longs</td></tr>
+<tr><td><b>NEG_GROW</b></td><td>Negative, growing — DOWN building</td><td class='pos'>Valid entry</td><td class='pos'>Valid long</td><td class='muted'>Watch</td></tr>
+<tr><td><b>POS_SHRK</b></td><td>Positive, shrinking — UP exhausted</td><td class='warn'>Risky — wait</td><td class='neg'>SHORT signal</td><td class='neg'>ENTER SHORT</td></tr>
+<tr><td><b>POS_GROW</b></td><td>Positive, growing — UP building</td><td class='neg'>SKIP long</td><td class='neg'>Skip / NG short</td><td class='neg'>Too early</td></tr>
+</table>
+
+<h2>RSI cheat sheet</h2>
+<table>
+<tr><th>RSI state</th><th>S-zones (long)</th><th>R-zones (long pullback)</th><th>NG ABOVE_R3 (short)</th></tr>
+<tr><td><b>OVERSOLD &lt;30</b></td><td class='warn'>Wait 1 bar — still falling</td><td class='neg'>Skip — too deep</td><td class='neg'>DO NOT short</td></tr>
+<tr><td><b>WEAK 30–45</b></td><td class='pos'>BEST entry</td><td class='warn'>OK NQ/TSX only</td><td class='neg'>Skip</td></tr>
+<tr><td><b>NEUTRAL 45–55</b></td><td class='warn'>OK at BC/TC only</td><td class='warn'>OK trend cont</td><td class='warn'>Wait</td></tr>
+<tr><td><b>STRONG 55–70</b></td><td class='neg'>Skip long</td><td class='pos'>ENTER — pullback confirmed</td><td class='pos'>SHORT entry good</td></tr>
+<tr><td><b>OVERBOUGHT &gt;70</b></td><td class='neg'>Do not long</td><td class='pos'>OK — continuation</td><td class='pos'>BEST SHORT entry</td></tr>
+</table>
+
+<h2>What the rulebook is NOT</h2>
+<ul>
+<li>Not a backtested strategy — these are descriptive groupby statistics, in-sample</li>
+<li>No transaction costs / slippage modelled — close-to-close arithmetic returns</li>
+<li>No statistical significance tests on win rates — interpret n carefully</li>
+<li>VOL_SPIKE_FLAG is a vol-of-vol threshold, not real change-point detection</li>
+<li>EWMA_VOL is exponentially-weighted squared returns, not fitted GARCH</li>
+</ul>
+</div>
+<div id='pane-CHECKLIST' class='pane'>
+<h1>CHECKLIST</h1>
+<div class='info'>Run every step before any trade. Skipping the daily-alignment check is the most common cause of losing trades.</div>
+
+<h2>Step 1 — Asset character check</h2>
+<ul>
+<li><b>NG:</b> Check conflict zones first (BELOW_S3, R2, S1, S3 = 0%, stop here)</li>
+<li><b>NIFTY:</b> Check conflict (S2 daily-bear → 0% for longs)</li>
+<li><b>NQ, TSX, GC:</b> No conflicts — proceed</li>
+</ul>
+
+<h2>Step 2 — Zone classification</h2>
+<ul>
+<li>S-zones / BC / TC / BELOW_S3 → TYPE A CONTRA (full base alloc)</li>
+<li>R-zones / ABOVE_R3 → TYPE B TREND (base × 0.6)</li>
+<li>NG at R2_R3 / R3 / ABOVE_R3 → CONSIDER SHORT not long</li>
+</ul>
+
+<h2>Step 3 — Layer 1: primary signal</h2>
+<ul>
+<li>Does the current (zone, ema_stack, macd_h) appear in the top-setups table on its asset's tab?</li>
+<li>Is it positive at all forward windows (3+6+9 for 2HR, 5+10+20 for daily)?</li>
+<li>If no → DO NOT TRADE (no exceptions)</li>
+</ul>
+
+<h2>Step 4 — Layer 2: ADX regime</h2>
+<ul>
+<li>Cross-reference current ADX bucket against asset-specific avoid list</li>
+<li>NQ avoids: S2_S1+RANGE, S3_S2+STRONG_TREND, ABOVE_R3+RANGE</li>
+<li>NG avoids: ABOVE_R3+STRONG_TREND, S1+STRONG, R1_R2+STRONG, R2_R3+TREND</li>
+<li>TSX avoids: S3_S2+STRONG, TC+STRONG, ABOVE_R3+STRONG, BC+RANGE</li>
+<li>GC avoids: S3_S2+TREND, R2+STRONG_TREND</li>
+<li>NIFTY avoids: TC+STRONG_TREND, R2_R3+TREND, BC+STRONG, S1+STRONG</li>
+<li>Conflict → reduce alloc 30%</li>
+</ul>
+
+<h2>Step 5 — Layer 3: RSI timing</h2>
+<ul>
+<li>Match current RSI state against the cheat sheet on the FRAMEWORK tab</li>
+<li>Mismatch → wait 1 bar before entering</li>
+</ul>
+
+<h2>Step 6 — Daily alignment</h2>
+<ul>
+<li>Look at the asset's tab → "Daily bull zones" line</li>
+<li>If current 2HR zone is in bull_d list AND going long → alloc × 1.5 (cap 90%)</li>
+<li>If current 2HR zone is in bear_d list AND going long → 0% (skip)</li>
+<li>Neither → alloc × 1.0</li>
+</ul>
+
+<h2>Step 7 — VOL_SPIKE_FLAG check</h2>
+<ul>
+<li>If flag = 1 (vol-of-vol expansion firing on current bar) → subtract 20pp from alloc</li>
+</ul>
+
+<h2>Step 8 — Final alloc calculation</h2>
+<ol>
+<li>Base alloc from zone</li>
+<li>× 0.6 if TYPE B</li>
+<li>× 1.5 if daily aligned (cap 90%)</li>
+<li>− 20pp if VOL_SPIKE_FLAG = 1</li>
+<li>+ 5pp if MACD = NEG_SHRK at entry</li>
+<li>Cap at 30% if watchlist</li>
+<li>Hard cap 90%</li>
+</ol>
+
+<h2>Step 9 — Position size</h2>
+<ul>
+<li>NQ: 25–30% of Kelly fraction × alloc%</li>
+<li>NG: 20% of Kelly × alloc% (high vol, smaller sizing)</li>
+<li>TSX: 25% of Kelly × alloc%</li>
+<li>GC: 25% of Kelly × alloc%</li>
+<li>NIFTY: 25% of Kelly × alloc%</li>
+</ul>
+
+<h2>Step 10 — Stops & targets</h2>
+<ul>
+<li><b>Stop = p25</b> of that specific combo (asset tab shows it)</li>
+<li><b>Target = p75</b> of that combo</li>
+<li>Time stop: 9 bars (2HR) or 20 bars (daily) — exit regardless</li>
+</ul>
+
+<h2>Step 11 — Re-check at every new bar</h2>
+<ul>
+<li>If direction changes → exit and re-enter only on next valid signal</li>
+<li>If alloc drops by ≥10pp → reduce position correspondingly</li>
+<li>If setup_id rotates to different combo → exit, evaluate new combo</li>
+</ul>
+
+<h2>Step 12 — Hold-max enforcement</h2>
+<ul>
+<li>2HR setups: exit by bar 9 even if green</li>
+<li>Daily setups: exit by day 20 even if green</li>
+<li>Edge decays beyond these windows — letting it run is gambling, not strategy</li>
+</ul>
+</div>
+<div id='pane-CROSS' class='pane'>
+<h1>CROSS-ASSET COMPARISON</h1>
+<div class='info'>Side-by-side view of all 5 assets — character, zone profile, top setups by score.</div>
+
+<h2>Per-asset character & setup counts</h2>
+<table>
+<tr><th>Asset</th><th>Character</th><th class='num'>2HR L/S</th><th class='num'>Daily L/S</th>
+<th>Daily bull zones</th><th>Daily bear zones</th></tr>
+<tr><td><b>NQ</b></td><td>Reversion bull · tech-dominated</td><td class='num'>28 / 15</td><td class='num'>24 / 3</td><td class='muted' style='font-size:10px'>ABOVE_R3, BC, BELOW_S3, R1, R1_R2, R2_R3, S1, S2, TC</td><td class='muted' style='font-size:10px'>S3_S2</td></tr><tr><td><b>NG</b></td><td>High-vol commodity · genuine short side at ABOVE_R3</td><td class='num'>26 / 13</td><td class='num'>17 / 9</td><td class='muted' style='font-size:10px'>BC, R1, R1_R2, S1, S2, S3, S3_S2, TC</td><td class='muted' style='font-size:10px'>ABOVE_R3, BELOW_S3, R2, R2_R3, R3</td></tr><tr><td><b>TSX</b></td><td>Persistent low-vol bull · all zones bullish</td><td class='num'>20 / 10</td><td class='num'>26 / 7</td><td class='muted' style='font-size:10px'>ABOVE_R3, BELOW_S3, R1, R2, R2_R3, R3, S1, S2_S1, S3_S2, TC</td><td class='muted' style='font-size:10px'>S3</td></tr><tr><td><b>GC</b></td><td>Structural uptrend · widest bull_d list</td><td class='num'>32 / 8</td><td class='num'>31 / 4</td><td class='muted' style='font-size:10px'>ABOVE_R3, BC, BELOW_S3, R1, R1_R2, R2, R2_R3, R3, S1, S2, S2_S1, S3, S3_S2, TC</td><td class='muted' style='font-size:10px'>None</td></tr><tr><td><b>NIFTY</b></td><td>Strong trend bull · genuine short side at BC/TC</td><td class='num'>23 / 14</td><td class='num'>26 / 11</td><td class='muted' style='font-size:10px'>ABOVE_R3, BC, BELOW_S3, R1, R1_R2, R2, R2_R3, R3, S1, S2_S1, S3, S3_S2, TC</td><td class='muted' style='font-size:10px'>S2</td></tr>
+</table>
+
+<h2>Top setup per asset (by score)</h2>
+<table>
+<tr><th>Asset</th><th>Top 2HR long</th><th>Top daily long</th>
+<th>Top 2HR short</th><th>Top daily short</th></tr>
+<tr><td><b>NQ</b></td><td>S1 BEAR NEG_GROW (63.0%, 60%)</td><td>R2_R3 BULL POS_SHRK (90.0%, 31%)</td><td class='neg'>R3 BULL NEG_SHRK (48.4%, 38%)</td><td class='neg'>BC BEAR POS_SHRK (39.5%, 52%)</td></tr><tr><td><b>NG</b></td><td>R3 BULL POS_SHRK (50.0%, 33%)</td><td>S3_S2 BEAR NEG_GROW (69.7%, 90%)</td><td class='neg'>ABOVE_R3 BULL POS_SHRK (43.7%, 36%)</td><td class='neg'>ABOVE_R3 BULL POS_GROW (54.2%, 36%)</td></tr><tr><td><b>TSX</b></td><td>TC BULL POS_GROW (87.5%, 52%)</td><td>TC MIXED POS_GROW (80.0%, 52%)</td><td class='neg'>BC BULL NEG_SHRK (0.0%, 40%)</td><td class='neg'>BC BEAR POS_SHRK (30.6%, 35%)</td></tr><tr><td><b>GC</b></td><td>S1 BEAR NEG_SHRK (77.8%, 65%)</td><td>S2 MIXED NEG_GROW (85.7%, 82%)</td><td class='neg'>R2 BULL POS_SHRK (27.8%, 40%)</td><td class='neg'>TC BULL NEG_GROW (46.8%, 52%)</td></tr><tr><td><b>NIFTY</b></td><td>R1 MIXED POS_GROW (67.9%, 31%)</td><td>ABOVE_R3 BULL POS_GROW (84.8%, 54%)</td><td class='neg'>TC BULL NEG_GROW (32.6%, 52%)</td><td class='neg'>TC MIXED POS_SHRK (30.0%, 52%)</td></tr>
+</table>
+<div class='info' style='font-size:10px'>Format: Zone EMA MACD (Win%, Alloc%) — first row's combo has the highest historical edge score for that asset/timeframe/direction.</div>
+
+<h2>Where shorts are real vs. hedges</h2>
+<table>
+<tr><th>Asset</th><th>Daily bear zones</th><th>Short side?</th><th>Use shorts as</th></tr>
+<tr><td><b>NQ</b></td><td>S3_S2 (weak)</td><td class='warn'>Hedge only</td><td>Intraday extension fades — never daily holds</td></tr>
+<tr><td><b>NG</b></td><td>ABOVE_R3, BELOW_S3, R2, R2_R3, R3</td><td class='neg'>YES — primary</td><td>ABOVE_R3+POS_SHRK = primary 90% short</td></tr>
+<tr><td><b>TSX</b></td><td>S3 only</td><td class='warn'>Hedge only</td><td>Very rare — most days no short signal</td></tr>
+<tr><td><b>GC</b></td><td>None</td><td class='warn'>Hedge only</td><td>Skip shorts entirely; gold structurally bullish</td></tr>
+<tr><td><b>NIFTY</b></td><td>S2 only (daily); BC/TC have 2HR + daily shorts</td><td class='neg'>YES — secondary</td><td>BC/TC POS_SHRK = real daily shorts at 35–55%</td></tr>
+</table>
+
+<h2>Asset-specific traps</h2>
+<table>
+<tr><th>Asset</th><th>Worst trap (avoid combo)</th></tr>
+<tr><td><b>NQ</b></td><td>S2_S1 + RANGE ADX → 37%win, −0.65% — strong avoid</td></tr>
+<tr><td><b>NG</b></td><td>ABOVE_R3 long with STRONG_TREND ADX — that's the SHORT signal, not long</td></tr>
+<tr><td><b>TSX</b></td><td>S3_S2 + STRONG_TREND → 29%win — avoid</td></tr>
+<tr><td><b>GC</b></td><td>S3_S2 + TREND → 25%win — counterintuitive but real</td></tr>
+<tr><td><b>NIFTY</b></td><td>TC + STRONG_TREND → 37%win — worst single combo on NIFTY 2HR</td></tr>
+</table>
+
+<h2>Universal rules</h2>
+<ol>
+<li>MACD NEG_SHRK at S-zones = best entry timing across all 5 assets</li>
+<li>RSI WEAK (30–45) beats OVERSOLD at S-zones</li>
+<li>EMA MIXED (turning) = strongest contra entry signal</li>
+<li>Both timeframes aligned → ×1.5 — single largest edge multiplier</li>
+<li>Daily fire = direction bias for entire week on 2HR setups</li>
+<li>Type C (2HR R + daily S) = highest conviction</li>
+<li>Stop = p25, Target = p75, Time stop = 9 bars (2HR) / 20 (daily)</li>
+</ol>
+</div>
 <div style='margin-top:20px;padding:7px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;font-size:9.5px;color:var(--muted)'>
-Page built 2026-04-25 12:10 UTC · Rulebook last rebuilt 2026-04-25T11:41:34 · saisrvn-quant/quant-signal-pages
+Page built 2026-04-25 12:52 UTC · Rulebook last rebuilt 2026-04-25T11:41:34 · saisrvn-quant/quant-signal-pages
 </div>
 </div>
 <script>
