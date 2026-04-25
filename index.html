@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<meta name='build-ts' content='2026-04-25 00:15 UTC'>
+<title>Quant Signal</title>
+<style>
+:root{--bg:#08090d;--bg2:#0f1117;--bg3:#151820;--bg4:#1b1f2e;
+      --border:#232738;--text:#dde3f0;--muted:#506070;
+      --pos:#22c55e;--neg:#ef4444;--warn:#f59e0b;--special:#a78bfa}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Courier New',monospace;font-size:11.5px;line-height:1.6}
+.page{max-width:1400px;margin:0 auto;padding:18px}
+.tabs{display:flex;gap:2px;margin-bottom:18px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0}
+.tab{padding:7px 16px;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;font-size:10.5px;font-weight:700;letter-spacing:1.2px}
+.tab:hover{color:#fff}
+.tab.active{color:#fff;border-bottom-color:var(--special)}
+.pane{display:none}.pane.active{display:block}
+h1{font-size:18px;letter-spacing:2px;color:var(--special);margin-bottom:10px}
+h2{font-size:10px;letter-spacing:2.5px;color:var(--muted);font-weight:700;text-transform:uppercase;margin:16px 0 7px;padding:4px 0;border-bottom:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:10.5px;margin-bottom:10px}
+th{background:var(--bg4);color:var(--muted);padding:5px 7px;text-align:left;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:4px 7px;border-bottom:1px solid var(--border);white-space:nowrap}
+tr:hover td{background:rgba(255,255,255,.03)}
+.num{text-align:right}
+.pos{color:var(--pos)}.neg{color:var(--neg)}.warn{color:var(--warn)}.muted{color:var(--muted)}
+.info{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:7px 10px;margin:7px 0;font-size:11px}
+</style>
+</head>
+<body>
+<div class='page'>
+<div class='tabs'><div class='tab active' onclick="show('SIGNAL')">SIGNAL</div><div class='tab' onclick="show('NQ')">NQ</div><div class='tab' onclick="show('NG')">NG</div><div class='tab' onclick="show('TSX')">TSX</div><div class='tab' onclick="show('GC')">GC</div><div class='tab' onclick="show('NIFTY')">NIFTY</div><div class='tab' onclick="show('FRAMEWORK')">FRAMEWORK</div><div class='tab' onclick="show('CHECKLIST')">CHECKLIST</div><div class='tab' onclick="show('CROSS')">CROSS</div></div>
+<div id='pane-SIGNAL' class='pane active'>
+<h1>SIGNAL — Live state</h1>
+<div class='info'>Page built: <b>2026-04-25 00:15 UTC</b> · Auto-reloads every 30 min when new build detected.</div>
+<table>
+<tr><th>Asset</th><th>TF</th><th>Zone</th><th>EMA</th><th>MACD</th>
+<th>ADX</th><th>RSI</th><th>Daily align</th><th>Match</th>
+<th>Direction</th><th class='num'>Alloc</th><th>Bar TS</th></tr>
+<tr><td>NQ</td><td>2h</td><td colspan='10' class='muted'>no data</td></tr>
+<tr><td>NQ</td><td>daily</td><td colspan='10' class='muted'>no data</td></tr>
+<tr><td>NG</td><td>2h</td><td colspan='10' class='muted'>no data</td></tr>
+<tr><td>NG</td><td>daily</td><td colspan='10' class='muted'>no data</td></tr>
+<tr><td>TSX</td><td>2h</td><td colspan='10' class='muted'>no data</td></tr>
+<tr><td>TSX</td><td>daily</td><td colspan='10' class='muted'>no data</td></tr>
+<tr><td>GC</td><td>2h</td><td colspan='10' class='muted'>no data</td></tr>
+<tr><td>GC</td><td>daily</td><td colspan='10' class='muted'>no data</td></tr>
+<tr><td>NIFTY</td><td>2h</td><td colspan='10' class='muted'>no data</td></tr>
+<tr><td>NIFTY</td><td>daily</td><td colspan='10' class='muted'>no data</td></tr>
+</table>
+<div class='info' style='margin-top:12px'>
+<b>Legend:</b> Green = LONG match · Red = SHORT match · Grey = no match ·
+Alloc ≥ 50% = actionable · Daily align ✓ = 2HR and daily zones agree
+</div>
+</div>
+<div id='pane-NQ' class='pane'><div class='muted'>No data for NQ.</div></div>
+<div id='pane-NG' class='pane'><div class='muted'>No data for NG.</div></div>
+<div id='pane-TSX' class='pane'><div class='muted'>No data for TSX.</div></div>
+<div id='pane-GC' class='pane'><div class='muted'>No data for GC.</div></div>
+<div id='pane-NIFTY' class='pane'><div class='muted'>No data for NIFTY.</div></div>
+<div id='pane-FRAMEWORK' class='pane'><h1>Framework</h1><p>L0-L5 indicator hierarchy · pivot/CPR zones · 2HR uses prior-WEEK pivots · daily uses prior-MONTH pivots · Contra vs Trend types · consistency gate across forward windows.</p></div>
+<div id='pane-CHECKLIST' class='pane'><h1>Checklist</h1><ol><li>Confirm zone + ema_stack + macd_h matches a top setup</li><li>Verify daily alignment (bull_d list)</li><li>Check ADX regime not in avoid list</li><li>Apply alloc multiplier chain</li><li>Stop = p25 of that combo</li><li>Time stop: 9 bars (2HR) / 20 bars (daily)</li></ol></div>
+<div id='pane-CROSS' class='pane'><h1>Cross-asset</h1><p>See individual asset tabs for full setup tables. Only NG and NIFTY have confirmed short sides. NQ / TSX / GC shorts are hedges only.</p></div>
+<div style='margin-top:20px;padding:7px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;font-size:9.5px;color:var(--muted)'>
+Page built 2026-04-25 00:15 UTC · Rulebook last rebuilt 2026-04-25T00:15:55 · saisrvn-quant/quant-signal-pages
+</div>
+</div>
+<script>
+function show(name){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('pane-'+name).classList.add('active');
+  [...document.querySelectorAll('.tab')].find(t=>t.textContent.trim()===name)?.classList.add('active');
+}
+// Poll for new build every 30 min; reload if build-ts changed
+const myBuild = document.querySelector("meta[name='build-ts']").content;
+setInterval(async ()=>{
+  try{
+    const r = await fetch(location.href, {cache:'no-cache'});
+    const t = await r.text();
+    const m = t.match(/name=['"]build-ts['"] content=['"]([^'"]+)['"]/);
+    if (m && m[1] !== myBuild) location.reload();
+  } catch(e) {}
+}, 30*60*1000);
+</script>
+</body>
+</html>
