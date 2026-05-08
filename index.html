@@ -3,7 +3,7 @@
 <head>
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width,initial-scale=1'>
-<meta name='build-ts' content='2026-05-07 21:40 UTC'>
+<meta name='build-ts' content='2026-05-08 08:59 UTC'>
 <title>Quant Signal</title>
 <style>
 :root{--bg:#08090d;--bg2:#0f1117;--bg3:#151820;--bg4:#1b1f2e;
@@ -33,7 +33,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
 <div class='tabs'><div class='tab active' onclick="show('SIGNAL')">SIGNAL</div><div class='tab' onclick="show('NQ')">NQ</div><div class='tab' onclick="show('NG')">NG</div><div class='tab' onclick="show('TSX')">TSX</div><div class='tab' onclick="show('GC')">GC</div><div class='tab' onclick="show('NIFTY')">NIFTY</div><div class='tab' onclick="show('FRAMEWORK')">FRAMEWORK</div><div class='tab' onclick="show('CHECKLIST')">CHECKLIST</div><div class='tab' onclick="show('CROSS')">CROSS</div></div>
 <div id='pane-SIGNAL' class='pane active'>
 <h1>SIGNAL — Live state</h1>
-<div class='info'>Page built: <b>2026-05-07 21:40 UTC</b> · Auto-reloads every 30 min when new build detected.<br>
+<div class='info'>Page built: <b>2026-05-08 08:59 UTC</b> · Auto-reloads every 30 min when new build detected.<br>
 <b>Bar TS</b> reflects the bar fed to the matcher. If marked <span class='warn'>(observ-truncated)</span>, that asset's indicators CSV was unavailable and the system fell back to the observations CSV (which excludes the most recent ~9 bars 2HR / ~20 bars daily). Run observe_v4 to repopulate indicators files.<br>
 <b>Daily Bar TS lag:</b> daily bars finalize hours after their session closes. When yfinance hasn't published today's daily bar yet, the system synthesizes one from today's intraday data (Open=first hour, High/Low=session range so far, Close=latest tick) and recomputes daily indicators on the fly. Such rows are marked <span class='special'>(live synthetic)</span> — gap-aware and reflect today's price action even when yfinance lags.<br>
 <b>Skip-zones</b> (CPR_INSIDE, P_R1, S1_P) are excluded from setup tables — current bar in a skip-zone shows as "no match" until price breaks out above TC or below BC.</div>
@@ -43,39 +43,39 @@ tr:hover td{background:rgba(255,255,255,.03)}
 <th>Direction</th><th class='num'>Alloc</th><th>Bar TS</th></tr>
 <tr>
 <td><b>NQ</b></td><td>2h</td>
-<td>ABOVE_R3</td><td>BULL</td><td>POS_SHRK</td>
-<td>STRONG_TREND</td><td>STRONG</td>
+<td>ABOVE_R3</td><td>BULL</td><td>NEG_GROW</td>
+<td>TREND</td><td>STRONG</td>
 <td>✓</td>
 <td>✓</td>
-<td class='pos'>🟢 LONG</td><td class='num pos'>54%</td>
-<td class='muted'>2026-05-07 18:00:00</td>
+<td class='neg'>🔴 SHORT</td><td class='num pos'>54%</td>
+<td class='muted'>2026-05-08 06:00:00</td>
 </tr>
 <tr>
 <td><b>NQ</b></td><td>daily</td>
-<td>R1</td><td>BULL</td><td>POS_GROW</td>
+<td>P_R1 <span class='warn' style='font-size:9px'>(skip-zone · wait for breakout)</span></td><td>BULL</td><td>POS_GROW</td>
 <td>STRONG_TREND</td><td>OVERBOUGHT</td>
-<td>✓</td>
-<td>✓</td>
-<td class='pos'>🟢 LONG</td><td class='num warn'>31%</td>
-<td class='muted'>2026-05-06 00:00:00</td>
-</tr>
-<tr>
-<td><b>NG</b></td><td>2h</td>
-<td>CPR_INSIDE <span class='warn' style='font-size:9px'>(skip-zone · wait for breakout)</span></td><td>BEAR</td><td>NEG_SHRK</td>
-<td>STRONG_TREND</td><td>STRONG</td>
 <td>—</td>
 <td>—</td>
 <td class='muted'>—</td><td class='num muted'>0%</td>
-<td class='muted'>2026-05-07 18:00:00</td>
+<td class='muted'>2026-05-07 00:00:00</td>
+</tr>
+<tr>
+<td><b>NG</b></td><td>2h</td>
+<td>CPR_INSIDE <span class='warn' style='font-size:9px'>(skip-zone · wait for breakout)</span></td><td>BULL</td><td>POS_GROW</td>
+<td>TREND</td><td>STRONG</td>
+<td>—</td>
+<td>—</td>
+<td class='muted'>—</td><td class='num muted'>0%</td>
+<td class='muted'>2026-05-08 06:00:00</td>
 </tr>
 <tr>
 <td><b>NG</b></td><td>daily</td>
-<td>CPR_INSIDE <span class='warn' style='font-size:9px'>(skip-zone · wait for breakout)</span></td><td>BEAR</td><td>POS_GROW</td>
+<td>TC</td><td>BEAR</td><td>POS_GROW</td>
 <td>RANGE</td><td>STRONG</td>
 <td>—</td>
 <td>—</td>
 <td class='muted'>—</td><td class='num muted'>0%</td>
-<td class='muted'>2026-05-06 00:00:00</td>
+<td class='muted'>2026-05-07 00:00:00</td>
 </tr>
 <tr>
 <td><b>TSX</b></td><td>2h</td>
@@ -98,11 +98,11 @@ tr:hover td{background:rgba(255,255,255,.03)}
 <tr>
 <td><b>GC</b></td><td>2h</td>
 <td>BC</td><td>BULL</td><td>POS_SHRK</td>
-<td>STRONG_TREND</td><td>NEUTRAL</td>
+<td>RANGE</td><td>NEUTRAL</td>
 <td>✓</td>
 <td>✓</td>
 <td class='neg'>🔴 SHORT</td><td class='num pos'>52%</td>
-<td class='muted'>2026-05-07 18:00:00</td>
+<td class='muted'>2026-05-08 06:00:00</td>
 </tr>
 <tr>
 <td><b>GC</b></td><td>daily</td>
@@ -111,25 +111,25 @@ tr:hover td{background:rgba(255,255,255,.03)}
 <td>—</td>
 <td>—</td>
 <td class='muted'>—</td><td class='num muted'>0%</td>
-<td class='muted'>2026-05-06 00:00:00</td>
+<td class='muted'>2026-05-07 00:00:00</td>
 </tr>
 <tr>
 <td><b>NIFTY</b></td><td>2h</td>
-<td>TC</td><td>BULL</td><td>POS_GROW</td>
+<td>CPR_INSIDE <span class='warn' style='font-size:9px'>(skip-zone · wait for breakout)</span></td><td>BULL</td><td>NEG_GROW</td>
 <td>RANGE</td><td>STRONG</td>
 <td>—</td>
 <td>—</td>
 <td class='muted'>—</td><td class='num muted'>0%</td>
-<td class='muted'>2026-05-07 08:00:00</td>
+<td class='muted'>2026-05-08 06:00:00</td>
 </tr>
 <tr>
 <td><b>NIFTY</b></td><td>daily</td>
-<td>TC</td><td>BEAR</td><td>POS_SHRK</td>
+<td>P_R1 <span class='warn' style='font-size:9px'>(skip-zone · wait for breakout)</span></td><td>BEAR</td><td>POS_GROW</td>
 <td>RANGE</td><td>NEUTRAL</td>
 <td>—</td>
 <td>—</td>
 <td class='muted'>—</td><td class='num muted'>0%</td>
-<td class='muted'>2026-05-05 00:00:00</td>
+<td class='muted'>2026-05-07 00:00:00</td>
 </tr>
 </table>
 <div class='info' style='margin-top:12px'>
@@ -141,31 +141,31 @@ Alloc ≥ 50% = actionable · Daily align ✓ = 2HR and daily zones agree
 <table>
 <tr><th>Last seen (UTC)</th><th>Asset</th><th>TF</th><th>Zone</th><th>EMA</th><th>MACD</th>
 <th>Side</th><th class='num'>n</th><th class='num'>Win%</th><th class='num'>Alloc</th></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NIFTY</b></td><td>daily</td><td>BC</td><td>MIXED</td><td>NEG_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>41</td><td class='num pos'>41.5%</td><td class='num pos'>52%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>NEG_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>241</td><td class='num pos'>41.5%</td><td class='num pos'>55%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>daily</td><td>S2</td><td>BULL</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>34</td><td class='num pos'>58.8%</td><td class='num pos'>82%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>daily</td><td>S2</td><td>MIXED</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>30</td><td class='num pos'>83.3%</td><td class='num pos'>82%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>daily</td><td>S1</td><td>BEAR</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>61</td><td class='num pos'>65.6%</td><td class='num pos'>60%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>MIXED</td><td>POS_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>49</td><td class='num pos'>63.3%</td><td class='num pos'>52%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>daily</td><td>BC</td><td>MIXED</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>25</td><td class='num pos'>92.0%</td><td class='num pos'>52%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>BULL</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>35</td><td class='num pos'>68.6%</td><td class='num pos'>57%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>daily</td><td>S3_S2</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>33</td><td class='num pos'>69.7%</td><td class='num pos'>90%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S3_S2</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>133</td><td class='num pos'>47.4%</td><td class='num pos'>90%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>MIXED</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>32</td><td class='num pos'>28.1%</td><td class='num pos'>50%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S2</td><td>BEAR</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>48</td><td class='num pos'>37.5%</td><td class='num pos'>82%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>NEG_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>49</td><td class='num pos'>55.1%</td><td class='num pos'>60%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>daily</td><td>S2_S1</td><td>BULL</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>44</td><td class='num pos'>54.5%</td><td class='num pos'>50%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>BELOW_S3</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>33</td><td class='num pos'>45.5%</td><td class='num pos'>75%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>TC</td><td>BEAR</td><td>NEG_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>24</td><td class='num pos'>41.7%</td><td class='num pos'>57%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>50</td><td class='num pos'>36.0%</td><td class='num pos'>60%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>67</td><td class='num pos'>26.9%</td><td class='num pos'>50%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>BC</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>37</td><td class='num pos'>40.5%</td><td class='num pos'>52%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S3_S2</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>111</td><td class='num pos'>48.6%</td><td class='num pos'>90%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>91</td><td class='num pos'>45.1%</td><td class='num pos'>65%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>268</td><td class='num pos'>52.6%</td><td class='num pos'>50%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>35</td><td class='num pos'>71.4%</td><td class='num pos'>60%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>2h</td><td>BC</td><td>BEAR</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>44</td><td class='num pos'>36.4%</td><td class='num pos'>57%</td></tr>
-<tr><td class='muted'>2026-05-07 18:15</td><td><b>NG</b></td><td>daily</td><td>BC</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>57</td><td class='num pos'>59.6%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NIFTY</b></td><td>daily</td><td>BC</td><td>MIXED</td><td>NEG_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>41</td><td class='num pos'>41.5%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>NEG_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>241</td><td class='num pos'>41.5%</td><td class='num pos'>55%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>daily</td><td>S2</td><td>BULL</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>34</td><td class='num pos'>58.8%</td><td class='num pos'>82%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>daily</td><td>S2</td><td>MIXED</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>30</td><td class='num pos'>83.3%</td><td class='num pos'>82%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>daily</td><td>S1</td><td>BEAR</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>61</td><td class='num pos'>65.6%</td><td class='num pos'>60%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>MIXED</td><td>POS_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>49</td><td class='num pos'>63.3%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>daily</td><td>BC</td><td>MIXED</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>25</td><td class='num pos'>92.0%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>daily</td><td>TC</td><td>BULL</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>35</td><td class='num pos'>68.6%</td><td class='num pos'>57%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>daily</td><td>S3_S2</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>33</td><td class='num pos'>69.7%</td><td class='num pos'>90%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S3_S2</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>133</td><td class='num pos'>47.4%</td><td class='num pos'>90%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>MIXED</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>32</td><td class='num pos'>28.1%</td><td class='num pos'>50%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S2</td><td>BEAR</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>48</td><td class='num pos'>37.5%</td><td class='num pos'>82%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>NEG_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>49</td><td class='num pos'>55.1%</td><td class='num pos'>60%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>daily</td><td>S2_S1</td><td>BULL</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>44</td><td class='num pos'>54.5%</td><td class='num pos'>50%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>BELOW_S3</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>33</td><td class='num pos'>45.5%</td><td class='num pos'>75%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>TC</td><td>BEAR</td><td>NEG_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>24</td><td class='num pos'>41.7%</td><td class='num pos'>57%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>50</td><td class='num pos'>36.0%</td><td class='num pos'>60%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>POS_SHRK</td><td class='neg'>🔴 SHORT</td><td class='num'>67</td><td class='num pos'>26.9%</td><td class='num pos'>50%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>BC</td><td>BEAR</td><td>POS_GROW</td><td class='neg'>🔴 SHORT</td><td class='num'>37</td><td class='num pos'>40.5%</td><td class='num pos'>52%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S3_S2</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>111</td><td class='num pos'>48.6%</td><td class='num pos'>90%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>91</td><td class='num pos'>45.1%</td><td class='num pos'>65%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S2_S1</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>268</td><td class='num pos'>52.6%</td><td class='num pos'>50%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>S1</td><td>BEAR</td><td>POS_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>35</td><td class='num pos'>71.4%</td><td class='num pos'>60%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>2h</td><td>BC</td><td>BEAR</td><td>NEG_SHRK</td><td class='pos'>🟢 LONG</td><td class='num'>44</td><td class='num pos'>36.4%</td><td class='num pos'>57%</td></tr>
+<tr><td class='muted'>2026-05-07 21:40</td><td><b>NG</b></td><td>daily</td><td>BC</td><td>BEAR</td><td>NEG_GROW</td><td class='pos'>🟢 LONG</td><td class='num'>57</td><td class='num pos'>59.6%</td><td class='num pos'>52%</td></tr>
 </table>
 </div>
 <div id='pane-NQ' class='pane'>
@@ -570,7 +570,7 @@ Alloc ≥ 50% = actionable · Daily align ✓ = 2HR and daily zones agree
 </ol>
 </div>
 <div style='margin-top:20px;padding:7px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;font-size:9.5px;color:var(--muted)'>
-Page built 2026-05-07 21:40 UTC · Rulebook last rebuilt 2026-05-01T07:54:13 · saisrvn-quant/quant-signal-pages
+Page built 2026-05-08 08:59 UTC · Rulebook last rebuilt 2026-05-01T07:54:13 · saisrvn-quant/quant-signal-pages
 </div>
 </div>
 <script>
